@@ -1,5 +1,3 @@
-import NO_EXISTE from './archivo-que-no-existe';
-
 import { useState, useEffect, useCallback } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import DashboardLayout from './layout/DashboardLayout';
