@@ -1,0 +1,96 @@
+name: PR - Revision automatica
+
+on:
+  pull_request:
+    types: [ opened, edited, synchronize, reopened ]
+
+jobs:
+  taiga-traceability:
+    name: Validar historia Taiga y criterios
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      contents: read
+    steps:
+      - name: Validar trazabilidad del PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || "";
+            const branch = context.payload.pull_request.head.ref || "";
+
+            const hasTaigaRef =
+              /TAIGA-\d+/i.test(body) ||
+              /US-\d+/i.test(body) ||
+              /#\d+/.test(body) ||
+              /TAIGA-\d+/i.test(branch) ||
+              /US-\d+/i.test(branch);
+
+            const hasAcceptanceCriteria =
+              /criterios de aceptacion/i.test(body) &&
+              /-\s+\[[ xX]\]/.test(body);
+
+            if (!hasTaigaRef || !hasAcceptanceCriteria) {
+              core.setFailed(
+                "El PR debe incluir referencia a Taiga (TAIGA-123, US-123 o #123) y criterios de aceptacion con checklist."
+              );
+            }
+
+  backend-checks:
+    name: Backend - pruebas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: temurin
+          cache: maven
+
+      - name: Ejecutar pruebas backend
+        working-directory: backend
+        run: mvn test -P test
+        env:
+          SPRING_PROFILES_ACTIVE: test
+
+  frontend-checks:
+    name: Frontend - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependencias
+        working-directory: frontend
+        run: npm ci
+
+      - name: Compilar frontend
+        working-directory: frontend
+        run: npm run build
+
+  auto-comment:
+    name: Comentar PR
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Comentar instrucciones del PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "CI iniciado. Verifica que el PR tenga historia Taiga, criterios de aceptacion y resultados exitosos antes de aprobar."
+            });

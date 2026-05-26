@@ -1,0 +1,306 @@
+{
+  "proyecto": "invernadero",
+  "sprint": "Sprint 1",
+  "historias": [
+    {
+      "orden": 1,
+      "titulo": "Configurar repositorio GitHub y ramas",
+      "descripcion": "Como desarrollador, quiero tener el repositorio configurado con ramas main y develop, y protección de rama, para garantizar un flujo de trabajo ordenado.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "criterios_aceptacion": [
+        "Dado que como desarrollador, cuando se ejecuta, entonces el resultado es correcto."
+      ]
+    },
+    {
+      "orden": 2,
+      "titulo": "Configurar GitHub Actions CI",
+      "descripcion": "Como desarrollador, quiero que cada PR ejecute automáticamente los tests del backend y frontend para detectar errores antes de fusionar.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "criterios_aceptacion": [
+        "Dado que como desarrollador, cuando se ejecuta, entonces el resultado es correcto."
+      ]
+    },
+    {
+      "orden": 3,
+      "titulo": "Configurar OAuth2 con Google",
+      "descripcion": "Como usuario, quiero poder iniciar sesión con mi cuenta de Google para acceder al sistema de forma segura.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "criterios_aceptacion": [
+        "Dado que como usuario, cuando se ejecuta, entonces el resultado es correcto."
+      ]
+    },
+    {
+      "orden": 4,
+      "titulo": "Implementar internacionalización ES/EN",
+      "descripcion": "Como usuario, quiero poder cambiar el idioma de la interfaz entre español e inglés sin recargar la página.",
+      "prioridad": "Media",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "criterios_aceptacion": [
+        "Dado que como usuario, cuando se ejecuta, entonces el resultado es correcto."
+      ]
+    },
+    {
+      "orden": 5,
+      "titulo": "Configurar despliegue con Docker",
+      "descripcion": "Como DevOps, quiero que el sistema se empaquete en contenedores Docker para facilitar el despliegue en cualquier entorno.",
+      "prioridad": "Media",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "criterios_aceptacion": [
+        "Dado que como devops, cuando se ejecuta, entonces el resultado es correcto."
+      ]
+    },
+    {
+      "orden": 6,
+      "titulo": "Listar TipoCultivos",
+      "descripcion": "Como usuario, quiero ver una tabla paginada con todos los tipo_cultivos registrados.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "tipo_cultivo",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección TipoCultivo, cuando realiza la acción 'Listar TipoCultivos', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 7,
+      "titulo": "Crear TipoCultivo",
+      "descripcion": "Como usuario, quiero registrar un nuevo tipo_cultivo con todos sus datos requeridos.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "tipo_cultivo",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección TipoCultivo, cuando realiza la acción 'Crear TipoCultivo', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 8,
+      "titulo": "Editar TipoCultivo",
+      "descripcion": "Como usuario, quiero modificar los datos de un tipo_cultivo existente.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "tipo_cultivo",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección TipoCultivo, cuando realiza la acción 'Editar TipoCultivo', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 9,
+      "titulo": "Eliminar TipoCultivo",
+      "descripcion": "Como usuario, quiero eliminar un tipo_cultivo con confirmación previa.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "tipo_cultivo",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección TipoCultivo, cuando realiza la acción 'Eliminar TipoCultivo', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 10,
+      "titulo": "Listar Cultivos",
+      "descripcion": "Como usuario, quiero ver una tabla paginada con todos los cultivos registrados.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "cultivo",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Cultivo, cuando realiza la acción 'Listar Cultivos', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 11,
+      "titulo": "Crear Cultivo",
+      "descripcion": "Como usuario, quiero registrar un nuevo cultivo con todos sus datos requeridos.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "cultivo",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Cultivo, cuando realiza la acción 'Crear Cultivo', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 12,
+      "titulo": "Editar Cultivo",
+      "descripcion": "Como usuario, quiero modificar los datos de un cultivo existente.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "cultivo",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Cultivo, cuando realiza la acción 'Editar Cultivo', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 13,
+      "titulo": "Eliminar Cultivo",
+      "descripcion": "Como usuario, quiero eliminar un cultivo con confirmación previa.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "cultivo",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Cultivo, cuando realiza la acción 'Eliminar Cultivo', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 14,
+      "titulo": "Listar Productos",
+      "descripcion": "Como usuario, quiero ver una tabla paginada con todos los productos registrados.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "producto",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Producto, cuando realiza la acción 'Listar Productos', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 15,
+      "titulo": "Crear Producto",
+      "descripcion": "Como usuario, quiero registrar un nuevo producto con todos sus datos requeridos.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "producto",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Producto, cuando realiza la acción 'Crear Producto', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 16,
+      "titulo": "Editar Producto",
+      "descripcion": "Como usuario, quiero modificar los datos de un producto existente.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "producto",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Producto, cuando realiza la acción 'Editar Producto', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 17,
+      "titulo": "Eliminar Producto",
+      "descripcion": "Como usuario, quiero eliminar un producto con confirmación previa.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "producto",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Producto, cuando realiza la acción 'Eliminar Producto', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 18,
+      "titulo": "Listar Proveedors",
+      "descripcion": "Como usuario, quiero ver una tabla paginada con todos los proveedors registrados.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "proveedor",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Proveedor, cuando realiza la acción 'Listar Proveedors', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 19,
+      "titulo": "Crear Proveedor",
+      "descripcion": "Como usuario, quiero registrar un nuevo proveedor con todos sus datos requeridos.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "proveedor",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Proveedor, cuando realiza la acción 'Crear Proveedor', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 20,
+      "titulo": "Editar Proveedor",
+      "descripcion": "Como usuario, quiero modificar los datos de un proveedor existente.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "proveedor",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Proveedor, cuando realiza la acción 'Editar Proveedor', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 21,
+      "titulo": "Eliminar Proveedor",
+      "descripcion": "Como usuario, quiero eliminar un proveedor con confirmación previa.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "proveedor",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Proveedor, cuando realiza la acción 'Eliminar Proveedor', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 22,
+      "titulo": "Listar Personas",
+      "descripcion": "Como usuario, quiero ver una tabla paginada con todos los personas registrados.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "persona",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Persona, cuando realiza la acción 'Listar Personas', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 23,
+      "titulo": "Crear Persona",
+      "descripcion": "Como usuario, quiero registrar un nuevo persona con todos sus datos requeridos.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "persona",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Persona, cuando realiza la acción 'Crear Persona', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 24,
+      "titulo": "Editar Persona",
+      "descripcion": "Como usuario, quiero modificar los datos de un persona existente.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "persona",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Persona, cuando realiza la acción 'Editar Persona', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    },
+    {
+      "orden": 25,
+      "titulo": "Eliminar Persona",
+      "descripcion": "Como usuario, quiero eliminar un persona con confirmación previa.",
+      "prioridad": "Alta",
+      "estado": "Nueva",
+      "tipo": "Historia de usuario",
+      "entidad": "persona",
+      "criterios_aceptacion": [
+        "Dado que el usuario accede a la sección Persona, cuando realiza la acción 'Eliminar Persona', entonces el sistema responde correctamente y muestra un mensaje de confirmación."
+      ]
+    }
+  ],
+  "instrucciones_importacion": "Para importar en Taiga: Settings > Import/Export > Import > pegar este JSON. O usar la API REST: POST /api/v1/userstories con token de autenticación.",
+  "script_api": {
+    "descripcion": "Script Python para crear historias via API de Taiga",
+    "uso": "python taiga_import.py --url https://taiga.io --token TU_TOKEN --project-slug invernadero"
+  }
+}

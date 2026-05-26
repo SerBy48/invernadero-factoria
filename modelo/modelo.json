@@ -1,0 +1,217 @@
+{
+  "proyecto": "invernadero",
+  "paquete_base": "com.usco.invernadero",
+  "motor": "postgresql",
+  "host": "localhost",
+  "puerto": 5432,
+  "dbname": "invernadero",
+  "username": "invernadero",
+  "password": "invernadero",
+  "idiomas": ["es", "en"],
+  "idioma_defecto": "es",
+  "entidades": [
+    {
+      "nombre": "tipo_cultivo",
+      "descripcion": "Categorías de cultivo disponibles en el invernadero",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "identity",
+          "longitud": null,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Clave primaria autogenerada"
+        },
+        {
+          "nombre": "nombre",
+          "tipo_dato": "string",
+          "longitud": 100,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Nombre del tipo de cultivo"
+        }
+      ],
+      "constraints": [
+        {
+          "tipo": "Unique",
+          "columnas": ["nombre"],
+          "descripcion": "El nombre del tipo de cultivo debe ser único"
+        }
+      ],
+      "relaciones": []
+    },
+    {
+      "nombre": "cultivo",
+      "descripcion": "Cultivos registrados en el invernadero",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "identity",
+          "longitud": null,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Clave primaria autogenerada"
+        },
+        {
+          "nombre": "nombre",
+          "tipo_dato": "string",
+          "longitud": 100,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Nombre del cultivo"
+        },
+        {
+          "nombre": "tipo_cultivo_id",
+          "tipo_dato": "fk",
+          "longitud": null,
+          "nulo": false,
+          "pk": false,
+          "fk_entidad": "tipo_cultivo",
+          "descripcion": "Referencia al tipo de cultivo"
+        }
+      ],
+      "constraints": [],
+      "relaciones": [
+        {
+          "tipo": "ManyToOne",
+          "campo_local": "tipo_cultivo_id",
+          "entidad_relacionada": "tipo_cultivo",
+          "campo_relacionado": "id",
+          "descripcion": "Cada cultivo pertenece a un tipo de cultivo"
+        }
+      ]
+    },
+    {
+      "nombre": "producto",
+      "descripcion": "Productos disponibles en el inventario del invernadero",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "identity",
+          "longitud": null,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Clave primaria autogenerada"
+        },
+        {
+          "nombre": "nombre",
+          "tipo_dato": "string",
+          "longitud": 100,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Nombre del producto"
+        },
+        {
+          "nombre": "precio",
+          "tipo_dato": "decimal",
+          "longitud": null,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Precio unitario del producto"
+        },
+        {
+          "nombre": "stock",
+          "tipo_dato": "integer",
+          "longitud": null,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Cantidad disponible en inventario"
+        }
+      ],
+      "constraints": [
+        {
+          "tipo": "Unique",
+          "columnas": ["nombre"],
+          "descripcion": "El nombre del producto debe ser único"
+        }
+      ],
+      "relaciones": []
+    },
+    {
+      "nombre": "proveedor",
+      "descripcion": "Proveedores que suministran productos al invernadero",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "identity",
+          "longitud": null,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Clave primaria autogenerada"
+        },
+        {
+          "nombre": "nombre",
+          "tipo_dato": "string",
+          "longitud": 150,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Razón social del proveedor"
+        },
+        {
+          "nombre": "telefono",
+          "tipo_dato": "string",
+          "longitud": 20,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Teléfono de contacto"
+        },
+        {
+          "nombre": "email",
+          "tipo_dato": "string",
+          "longitud": 150,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Correo electrónico de contacto"
+        }
+      ],
+      "constraints": [],
+      "relaciones": []
+    },
+    {
+      "nombre": "persona",
+      "descripcion": "Personas registradas en el sistema (empleados, clientes)",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "identity",
+          "longitud": null,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Clave primaria autogenerada"
+        },
+        {
+          "nombre": "nombre",
+          "tipo_dato": "string",
+          "longitud": 100,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Nombre de la persona"
+        },
+        {
+          "nombre": "apellido",
+          "tipo_dato": "string",
+          "longitud": 100,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Apellido de la persona"
+        },
+        {
+          "nombre": "email",
+          "tipo_dato": "string",
+          "longitud": 150,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Correo electrónico"
+        }
+      ],
+      "constraints": [
+        {
+          "tipo": "Unique",
+          "columnas": ["email"],
+          "descripcion": "El email debe ser único por persona"
+        }
+      ],
+      "relaciones": []
+    }
+  ]
+}

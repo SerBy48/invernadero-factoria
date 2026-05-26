@@ -1,0 +1,36 @@
+name: Taiga - Sincronizacion de historias
+
+on:
+  pull_request:
+    types: [ opened, edited, synchronize, closed ]
+  issues:
+    types: [ opened, edited, closed, reopened ]
+
+jobs:
+  notify-taiga:
+    name: Notificar actividad a Taiga
+    runs-on: ubuntu-latest
+    env:
+      TAIGA_WEBHOOK_URL: ${{ secrets.TAIGA_WEBHOOK_URL }}
+      TAIGA_TOKEN: ${{ secrets.TAIGA_TOKEN }}
+      TAIGA_PROJECT_ID: ${{ secrets.TAIGA_PROJECT_ID }}
+    steps:
+      - name: Enviar evento a webhook Taiga
+        run: |
+          if [ -z "$TAIGA_WEBHOOK_URL" ]; then
+            echo "TAIGA_WEBHOOK_URL no configurado. Se omite sincronizacion."
+            exit 0
+          fi
+
+          curl -sS -X POST \
+            -H "Authorization: Bearer $TAIGA_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"project\": \"$TAIGA_PROJECT_ID\",
+              \"event_name\": \"${{ github.event_name }}\",
+              \"action\": \"${{ github.event.action }}\",
+              \"repository\": \"${{ github.repository }}\",
+              \"actor\": \"${{ github.actor }}\",
+              \"url\": \"${{ github.event.pull_request.html_url || github.event.issue.html_url }}\"
+            }" \
+            "$TAIGA_WEBHOOK_URL"

@@ -1,0 +1,66 @@
+name: CD - Docker y notificacion Taiga
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ "v*" ]
+
+jobs:
+  docker-build-push:
+    name: Construir y publicar imagenes Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Login a Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build y push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/invernadero-backend:latest
+            ${{ secrets.DOCKER_USERNAME }}/invernadero-backend:${{ github.sha }}
+
+      - name: Build y push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/invernadero-frontend:latest
+            ${{ secrets.DOCKER_USERNAME }}/invernadero-frontend:${{ github.sha }}
+
+  taiga-deploy-notification:
+    name: Notificar despliegue a Taiga
+    runs-on: ubuntu-latest
+    needs: docker-build-push
+    env:
+      TAIGA_WEBHOOK_URL: ${{ secrets.TAIGA_WEBHOOK_URL }}
+      TAIGA_TOKEN: ${{ secrets.TAIGA_TOKEN }}
+      TAIGA_PROJECT_ID: ${{ secrets.TAIGA_PROJECT_ID }}
+    steps:
+      - name: Enviar evento deploy_success a Taiga
+        run: |
+          if [ -z "$TAIGA_WEBHOOK_URL" ]; then
+            echo "TAIGA_WEBHOOK_URL no configurado. Se omite notificacion."
+            exit 0
+          fi
+
+          curl -sS -X POST \
+            -H "Authorization: Bearer $TAIGA_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"project\": \"$TAIGA_PROJECT_ID\",
+              \"event\": \"deploy_success\",
+              \"repository\": \"${{ github.repository }}\",
+              \"commit\": \"${{ github.sha }}\",
+              \"branch\": \"${{ github.ref_name }}\"
+            }" \
+            "$TAIGA_WEBHOOK_URL"

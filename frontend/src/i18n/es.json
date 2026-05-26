@@ -1,0 +1,117 @@
+{
+  "app": {
+    "titulo": "Sistema Invernadero",
+    "cerrarSesion": "Cerrar sesión",
+    "bienvenido": "Bienvenido"
+  },
+  "acciones": {
+    "nuevo": "Nuevo",
+    "editar": "Editar",
+    "eliminar": "Eliminar",
+    "guardar": "Guardar",
+    "cancelar": "Cancelar",
+    "buscar": "Buscar"
+  },
+  "mensajes": {
+    "confirmEliminar": "¿Confirma eliminar este registro?",
+    "exito": "Operación exitosa",
+    "error": "Ocurrió un error"
+  },
+  "entidades": {
+    "tipo_cultivo": {
+      "titulo": "Tipos de Cultivo",
+      "descripcion": "Categorías de cultivo disponibles en el invernadero",
+      "id": "Id",
+      "nombre": "Nombre"
+    },
+    "cultivo": {
+      "titulo": "Cultivos",
+      "descripcion": "Cultivos registrados en el invernadero",
+      "id": "Id",
+      "nombre": "Nombre",
+      "tipo_cultivo_id": "Tipo de Cultivo"
+    },
+    "producto": {
+      "titulo": "Productos",
+      "descripcion": "Productos disponibles en el inventario del invernadero",
+      "id": "Id",
+      "nombre": "Nombre",
+      "precio": "Precio",
+      "stock": "Stock"
+    },
+    "proveedor": {
+      "titulo": "Proveedores",
+      "descripcion": "Proveedores que suministran productos al invernadero",
+      "id": "Id",
+      "nombre": "Nombre",
+      "telefono": "Teléfono",
+      "email": "Email"
+    },
+    "persona": {
+      "titulo": "Personas",
+      "descripcion": "Personas registradas en el sistema (empleados, clientes)",
+      "id": "Id",
+      "nombre": "Nombre",
+      "apellido": "Apellido",
+      "email": "Email"
+    }
+  },
+  "perfil": {
+    "titulo": "Mi Perfil",
+    "descripcion": "Tus datos personales y configuración de cuenta",
+    "nombre": "Nombre completo",
+    "email": "Correo electrónico",
+    "rol": "Rol",
+    "proveedor": "Tipo de cuenta",
+    "fechaCreacion": "Miembro desde",
+    "eliminarCuenta": "Eliminar mi cuenta",
+    "confirmarEliminar": "¿Estás seguro? Esta acción es irreversible y eliminará permanentemente todos tus datos.",
+    "roles": { "ADMIN": "Administrador", "USER": "Usuario" },
+    "proveedores": { "local": "Cuenta local", "google": "Google" }
+  },
+  "admin": {
+    "usuarios": {
+      "titulo": "Gestión de Usuarios",
+      "descripcion": "Administra los usuarios registrados en el sistema",
+      "nombre": "Nombre",
+      "email": "Correo",
+      "rol": "Rol",
+      "estado": "Estado",
+      "proveedor": "Cuenta",
+      "fechaCreacion": "Fecha de registro",
+      "inhabilitar": "Inhabilitar",
+      "habilitar": "Habilitar",
+      "activo": "Activo",
+      "inactivo": "Inactivo"
+    },
+    "auditoria": {
+      "titulo": "Auditoría del Sistema",
+      "descripcion": "Registro de actividades y acciones del sistema",
+      "fecha": "Fecha y hora",
+      "email": "Usuario",
+      "nombre": "Nombre",
+      "accion": "Acción",
+      "detalle": "Detalle",
+      "exportar": "Exportar CSV",
+      "filtrar": "Filtrar",
+      "limpiar": "Limpiar",
+      "mes": "Mes",
+      "anio": "Año",
+      "todasAcciones": "Todas las acciones",
+      "todosMeses": "Todos los meses"
+    }
+  },
+  "tiposAccion": {
+    "LOGIN": "Inicio de sesión",
+    "LOGOUT": "Cierre de sesión",
+    "REGISTRO": "Registro",
+    "ELIMINACION_CUENTA": "Eliminación de cuenta",
+    "INHABILITAR_USUARIO": "Inhabilitar usuario",
+    "HABILITAR_USUARIO": "Habilitar usuario"
+  },
+  "meses": {
+    "1": "Enero", "2": "Febrero", "3": "Marzo", "4": "Abril",
+    "5": "Mayo", "6": "Junio", "7": "Julio", "8": "Agosto",
+    "9": "Septiembre", "10": "Octubre", "11": "Noviembre", "12": "Diciembre"
+  }
+}
