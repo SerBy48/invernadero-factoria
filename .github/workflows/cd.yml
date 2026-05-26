@@ -1,8 +1,8 @@
 name: CD - Docker y notificacion Taiga
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ main ]
     tags: [ "v*" ]
 
 jobs:

@@ -1,10 +1,14 @@
 package com.usco.invernadero;
 
+import com.usco.invernadero.entity.Usuario;
+import com.usco.invernadero.repository.UsuarioRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -19,7 +23,23 @@ public class CultivoControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @BeforeEach
+    void setUpUser() {
+        usuarioRepository.findByEmail("test@example.com").orElseGet(() -> {
+            Usuario usuario = new Usuario();
+            usuario.setNombre("Usuario Test");
+            usuario.setEmail("test@example.com");
+            usuario.setPassword("test");
+            usuario.setProveedor("local");
+            return usuarioRepository.save(usuario);
+        });
+    }
+
     @Test
+    @WithMockUser(username = "test@example.com", roles = "USER")
     void getAll_Cultivo_shouldReturn200() throws Exception {
         mockMvc.perform(get("/api/cultivos")
                 .header("Accept-Language", "es"))
@@ -28,6 +48,7 @@ public class CultivoControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test@example.com", roles = "USER")
     void getById_Cultivo_notFound_shouldReturn404() throws Exception {
         mockMvc.perform(get("/api/cultivos/999999"))
                .andExpect(status().isNotFound());
