@@ -161,6 +161,12 @@ public class AuthController {
         String email = extraerEmail(authentication);
         Usuario u = usuarioRepository.findByEmail(email).orElseThrow();
 
+        if ("ADMIN".equals(u.getRol())) {
+            return ResponseEntity.status(403).body(Map.of(
+                "error", "Las cuentas administradoras no se pueden eliminar desde el perfil."
+            ));
+        }
+
         auditLogService.registrar(email, u.getNombre(), TipoAccion.ELIMINACION_CUENTA, null);
 
         cultivoRepository.deleteAll(cultivoRepository.findByUsuario(u));

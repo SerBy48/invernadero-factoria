@@ -112,9 +112,12 @@ export default function Sidebar({ entidades, vistaActual, setVista, mobileOpen, 
       <Divider sx={{ borderColor: 'rgba(255,255,255,0.12)' }} />
 
       <List sx={{ flexGrow: 1, px: 1.5, pt: 1.5, pb: 1, overflowY: 'auto' }}>
-        {/* CRUD entities */}
-        {sectionLabel('Gestión')}
-        {entidades.map(ent => navItem(ent, ENTITY_ICONS[ent], t(`entidades.${ent}.titulo`)))}
+        {usuarioRol !== 'ADMIN' && (
+          <>
+            {sectionLabel('Gestion')}
+            {entidades.map(ent => navItem(ent, ENTITY_ICONS[ent], t(`entidades.${ent}.titulo`)))}
+          </>
+        )}
 
         {/* Perfil */}
         <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', my: 1 }} />
@@ -124,7 +127,7 @@ export default function Sidebar({ entidades, vistaActual, setVista, mobileOpen, 
         {usuarioRol === 'ADMIN' && (
           <>
             <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', my: 1 }} />
-            {sectionLabel('Administración')}
+            {sectionLabel('Administracion')}
             {navItem('admin_usuarios',  <GroupRoundedIcon />,   t('admin.usuarios.titulo'))}
             {navItem('admin_auditoria', <HistoryRoundedIcon />, t('admin.auditoria.titulo'))}
           </>

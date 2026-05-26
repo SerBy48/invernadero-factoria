@@ -15,6 +15,7 @@ import { useI18n } from './i18n/useI18n';
 import { useColorMode } from './theme/ThemeContext';
 
 const ENTIDADES = ['tipo_cultivo', 'cultivo', 'producto', 'proveedor', 'persona'];
+const ADMIN_DEFAULT_VIEW = 'admin_usuarios';
 
 export default function App() {
   const [cargando,  setCargando]  = useState(true);
@@ -32,6 +33,7 @@ export default function App() {
         setLang(r.data.idioma || 'es');
         setMode(r.data.modoOscuro ? 'dark' : 'light');
         setUsuario(r.data);
+        setVista(r.data.rol === 'ADMIN' ? ADMIN_DEFAULT_VIEW : ENTIDADES[0]);
         setErrorMsg(null);
         setCargando(false);
       })

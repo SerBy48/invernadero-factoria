@@ -1,0 +1,138 @@
+name: Automatizacion - Historia por fallo CI
+
+on:
+  workflow_run:
+    workflows: [ "CI - Build y pruebas" ]
+    types: [ completed ]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  create-story:
+    name: Crear historia automatica por fallo
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - name: Crear issue en GitHub
+        id: github_issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const title = `[AUTO-CI] Corregir fallo en ${run.name} #${run.run_number}`;
+
+            const existing = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              labels: "auto-ci"
+            });
+
+            const duplicated = existing.data.find(issue => issue.title === title);
+            if (duplicated) {
+              core.info(`Ya existe issue: ${duplicated.html_url}`);
+              core.setOutput("issue_url", duplicated.html_url);
+              core.setOutput("issue_title", duplicated.title);
+              return;
+            }
+
+            for (const label of [
+              { name: "auto-ci", color: "0E8A16", description: "Creado automaticamente por GitHub Actions" },
+              { name: "bug", color: "D73A4A", description: "Error o regresion detectada" },
+              { name: "taiga-auto", color: "5319E7", description: "Candidato a historia automatica en Taiga" }
+            ]) {
+              try {
+                await github.rest.issues.createLabel({ owner, repo, ...label });
+              } catch (error) {
+                if (error.status !== 422) throw error;
+              }
+            }
+
+            const body = [
+              "## Historia automatica",
+              "",
+              "Como equipo de desarrollo,",
+              "quiero corregir el fallo detectado por GitHub Actions,",
+              "para mantener el sistema estable y entregable.",
+              "",
+              "## Contexto",
+              "",
+              `- Workflow: ${run.name}`,
+              `- Ejecucion: #${run.run_number}`,
+              `- Rama: ${run.head_branch}`,
+              `- Commit: ${run.head_sha}`,
+              `- URL: ${run.html_url}`,
+              "",
+              "## Criterios de aceptacion",
+              "",
+              "- [ ] Se identifica la causa del fallo.",
+              "- [ ] Se corrige el codigo o la configuracion afectada.",
+              "- [ ] El workflow vuelve a ejecutarse correctamente.",
+              "- [ ] Se deja evidencia del resultado en GitHub Actions.",
+              "",
+              "## Relacion con Taiga",
+              "",
+              "Esta incidencia puede registrarse como historia automatica o tarea tecnica en Taiga."
+            ].join("\n");
+
+            const issue = await github.rest.issues.create({
+              owner,
+              repo,
+              title,
+              body,
+              labels: ["auto-ci", "bug", "taiga-auto"]
+            });
+
+            core.setOutput("issue_url", issue.data.html_url);
+            core.setOutput("issue_title", issue.data.title);
+
+      - name: Crear historia en Taiga si hay secretos configurados
+        env:
+          TAIGA_API_URL: ${{ secrets.TAIGA_API_URL }}
+          TAIGA_AUTH_TOKEN: ${{ secrets.TAIGA_AUTH_TOKEN }}
+          TAIGA_PROJECT_NUMERIC_ID: ${{ secrets.TAIGA_PROJECT_NUMERIC_ID }}
+          ISSUE_TITLE: ${{ steps.github_issue.outputs.issue_title }}
+          ISSUE_URL: ${{ steps.github_issue.outputs.issue_url }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+        run: |
+          if [ -z "$TAIGA_AUTH_TOKEN" ] || [ -z "$TAIGA_PROJECT_NUMERIC_ID" ]; then
+            echo "TAIGA_AUTH_TOKEN o TAIGA_PROJECT_NUMERIC_ID no configurados. Se omite creacion directa en Taiga."
+            exit 0
+          fi
+
+          if [ -z "$TAIGA_API_URL" ]; then
+            TAIGA_API_URL="https://api.taiga.io/api/v1"
+          fi
+
+          python - <<'PY'
+          import json
+          import os
+
+          payload = {
+              "project": int(os.environ["TAIGA_PROJECT_NUMERIC_ID"]),
+              "subject": os.environ["ISSUE_TITLE"],
+              "description": (
+                  "Historia creada automaticamente por GitHub Actions.\n\n"
+                  f"Issue GitHub: {os.environ['ISSUE_URL']}\n"
+                  f"Workflow fallido: {os.environ['RUN_URL']}\n\n"
+                  "Criterios de aceptacion:\n"
+                  "- Se identifica la causa del fallo.\n"
+                  "- Se corrige el codigo o la configuracion afectada.\n"
+                  "- El workflow vuelve a ejecutarse correctamente.\n"
+                  "- Se deja evidencia del resultado en GitHub Actions.\n"
+              ),
+              "tags": ["auto-ci", "github-actions"]
+          }
+
+          with open("taiga-story.json", "w", encoding="utf-8") as f:
+              json.dump(payload, f)
+          PY
+
+          curl -sS -X POST "$TAIGA_API_URL/userstories" \
+            -H "Authorization: Bearer $TAIGA_AUTH_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data @taiga-story.json

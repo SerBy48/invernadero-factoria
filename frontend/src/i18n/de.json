@@ -1,24 +1,24 @@
 {
-  "app": { "titulo": "Gewächshaus-System", "cerrarSesion": "Abmelden", "bienvenido": "Willkommen" },
-  "acciones": { "nuevo": "Neu", "editar": "Bearbeiten", "eliminar": "Löschen", "guardar": "Speichern", "cancelar": "Abbrechen", "buscar": "Suchen" },
-  "mensajes": { "confirmEliminar": "Diesen Eintrag wirklich löschen?", "exito": "Vorgang erfolgreich", "error": "Ein Fehler ist aufgetreten" },
+  "app": { "titulo": "Gewachshaus-System", "cerrarSesion": "Abmelden", "bienvenido": "Willkommen" },
+  "acciones": { "nuevo": "Neu", "editar": "Bearbeiten", "eliminar": "Loschen", "guardar": "Speichern", "cancelar": "Abbrechen", "buscar": "Suchen" },
+  "mensajes": { "confirmEliminar": "Diesen Eintrag wirklich loschen?", "exito": "Vorgang erfolgreich", "error": "Ein Fehler ist aufgetreten" },
   "entidades": {
-    "tipo_cultivo": { "titulo": "Kulturtypen", "descripcion": "Im Gewächshaus verfügbare Kulturkategorien", "id": "Id", "nombre": "Name" },
-    "cultivo": { "titulo": "Kulturen", "descripcion": "Im Gewächshaus registrierte Kulturen", "id": "Id", "nombre": "Name", "tipo_cultivo_id": "Kulturtyp" },
-    "producto": { "titulo": "Produkte", "descripcion": "Im Inventar verfügbare Produkte", "id": "Id", "nombre": "Name", "precio": "Preis", "stock": "Bestand" },
-    "proveedor": { "titulo": "Lieferanten", "descripcion": "Lieferanten, die das Gewächshaus beliefern", "id": "Id", "nombre": "Name", "telefono": "Telefon", "email": "E-Mail" },
+    "tipo_cultivo": { "titulo": "Kulturtypen", "descripcion": "Im Gewachshaus verfugbare Kulturkategorien", "id": "Id", "nombre": "Name" },
+    "cultivo": { "titulo": "Kulturen", "descripcion": "Im Gewachshaus registrierte Kulturen", "id": "Id", "nombre": "Name", "tipo_cultivo_id": "Kulturtyp" },
+    "producto": { "titulo": "Produkte", "descripcion": "Im Inventar verfugbare Produkte", "id": "Id", "nombre": "Name", "precio": "Preis", "stock": "Bestand" },
+    "proveedor": { "titulo": "Lieferanten", "descripcion": "Lieferanten, die das Gewachshaus beliefern", "id": "Id", "nombre": "Name", "telefono": "Telefon", "email": "E-Mail" },
     "persona": { "titulo": "Personen", "descripcion": "Im System registrierte Personen", "id": "Id", "nombre": "Vorname", "apellido": "Nachname", "email": "E-Mail" }
   },
   "perfil": {
-    "titulo": "Mein Profil", "descripcion": "Ihre persönlichen Daten und Kontoeinstellungen",
-    "nombre": "Vollständiger Name", "email": "E-Mail-Adresse", "rol": "Rolle", "proveedor": "Kontotyp", "fechaCreacion": "Mitglied seit",
-    "eliminarCuenta": "Konto löschen", "confirmarEliminar": "Sind Sie sicher? Diese Aktion ist unwiderruflich.",
+    "titulo": "Mein Profil", "descripcion": "Ihre personlichen Daten und Kontoeinstellungen",
+    "nombre": "Vollstandiger Name", "email": "E-Mail-Adresse", "rol": "Rolle", "proveedor": "Kontotyp", "fechaCreacion": "Mitglied seit",
+    "eliminarCuenta": "Konto loschen", "adminNoEliminable": "Administratorkonten koennen nicht im Profil geloescht werden, damit das System nicht ohne Verwaltung bleibt.", "confirmarEliminar": "Sind Sie sicher? Diese Aktion ist unwiderruflich.",
     "roles": { "ADMIN": "Administrator", "USER": "Benutzer" }, "proveedores": { "local": "Lokales Konto", "google": "Google" }
   },
   "admin": {
     "usuarios": { "titulo": "Benutzerverwaltung", "descripcion": "Verwalten Sie die Systembenutzer", "nombre": "Name", "email": "E-Mail", "rol": "Rolle", "estado": "Status", "proveedor": "Konto", "fechaCreacion": "Registrierungsdatum", "inhabilitar": "Deaktivieren", "habilitar": "Aktivieren", "activo": "Aktiv", "inactivo": "Inaktiv" },
-    "auditoria": { "titulo": "Systemaudit", "descripcion": "Protokoll der Systemaktivitäten", "fecha": "Datum und Uhrzeit", "email": "Benutzer", "nombre": "Name", "accion": "Aktion", "detalle": "Detail", "exportar": "CSV exportieren", "filtrar": "Filtern", "limpiar": "Zurücksetzen", "mes": "Monat", "anio": "Jahr", "todasAcciones": "Alle Aktionen", "todosMeses": "Alle Monate" }
+    "auditoria": { "titulo": "Systemaudit", "descripcion": "Protokoll der Systemaktivitaten", "fecha": "Datum und Uhrzeit", "email": "Benutzer", "nombre": "Name", "accion": "Aktion", "detalle": "Detail", "exportar": "CSV exportieren", "filtrar": "Filtern", "limpiar": "Zurucksetzen", "mes": "Monat", "anio": "Jahr", "todasAcciones": "Alle Aktionen", "todosMeses": "Alle Monate" }
   },
-  "tiposAccion": { "LOGIN": "Anmeldung", "LOGOUT": "Abmeldung", "REGISTRO": "Registrierung", "ELIMINACION_CUENTA": "Kontolöschung", "INHABILITAR_USUARIO": "Benutzer deaktivieren", "HABILITAR_USUARIO": "Benutzer aktivieren" },
-  "meses": { "1": "Januar", "2": "Februar", "3": "März", "4": "April", "5": "Mai", "6": "Juni", "7": "Juli", "8": "August", "9": "September", "10": "Oktober", "11": "November", "12": "Dezember" }
+  "tiposAccion": { "LOGIN": "Anmeldung", "LOGOUT": "Abmeldung", "REGISTRO": "Registrierung", "ELIMINACION_CUENTA": "Kontoloschung", "INHABILITAR_USUARIO": "Benutzer deaktivieren", "HABILITAR_USUARIO": "Benutzer aktivieren" },
+  "meses": { "1": "Januar", "2": "Februar", "3": "Marz", "4": "April", "5": "Mai", "6": "Juni", "7": "Juli", "8": "August", "9": "September", "10": "Oktober", "11": "November", "12": "Dezember" }
 }

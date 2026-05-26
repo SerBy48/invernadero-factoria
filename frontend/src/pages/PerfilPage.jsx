@@ -32,6 +32,7 @@ export default function PerfilPage({ usuario, onCuentaEliminada }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [cargando,    setCargando]    = useState(false);
   const [error,       setError]       = useState(null);
+  const esAdmin = usuario.rol === 'ADMIN';
 
   const fechaFormateada = usuario.fechaCreacion
     ? new Date(usuario.fechaCreacion).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
@@ -109,26 +110,33 @@ export default function PerfilPage({ usuario, onCuentaEliminada }) {
         />
       </Paper>
 
-      {/* Zona de peligro */}
-      <Paper
-        elevation={0}
-        sx={{ borderRadius: 3, border: '1px solid', borderColor: 'error.light', p: 3 }}
-      >
-        <Typography variant="subtitle1" fontWeight={700} color="error" sx={{ mb: 0.5 }}>
-          Zona de peligro
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          {t('perfil.confirmarEliminar')}
-        </Typography>
-        <Button
-          variant="outlined"
-          color="error"
-          startIcon={<DeleteForeverRoundedIcon />}
-          onClick={() => { setError(null); setConfirmOpen(true); }}
+      {!esAdmin && (
+        <Paper
+          elevation={0}
+          sx={{ borderRadius: 3, border: '1px solid', borderColor: 'error.light', p: 3 }}
         >
-          {t('perfil.eliminarCuenta')}
-        </Button>
-      </Paper>
+          <Typography variant="subtitle1" fontWeight={700} color="error" sx={{ mb: 0.5 }}>
+            Zona de peligro
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            {t('perfil.confirmarEliminar')}
+          </Typography>
+          <Button
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteForeverRoundedIcon />}
+            onClick={() => { setError(null); setConfirmOpen(true); }}
+          >
+            {t('perfil.eliminarCuenta')}
+          </Button>
+        </Paper>
+      )}
+
+      {esAdmin && (
+        <Alert severity="info" sx={{ borderRadius: 2 }}>
+          {t('perfil.adminNoEliminable')}
+        </Alert>
+      )}
 
       {/* Dialog confirmación */}
       <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)} maxWidth="xs" fullWidth>

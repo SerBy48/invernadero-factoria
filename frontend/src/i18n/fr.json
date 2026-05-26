@@ -1,24 +1,24 @@
 {
-  "app": { "titulo": "Système de Serre", "cerrarSesion": "Déconnexion", "bienvenido": "Bienvenue" },
+  "app": { "titulo": "Systeme de Serre", "cerrarSesion": "Deconnexion", "bienvenido": "Bienvenue" },
   "acciones": { "nuevo": "Nouveau", "editar": "Modifier", "eliminar": "Supprimer", "guardar": "Enregistrer", "cancelar": "Annuler", "buscar": "Rechercher" },
-  "mensajes": { "confirmEliminar": "Confirmer la suppression ?", "exito": "Opération réussie", "error": "Une erreur s'est produite" },
+  "mensajes": { "confirmEliminar": "Confirmer la suppression?", "exito": "Operation reussie", "error": "Une erreur s'est produite" },
   "entidades": {
-    "tipo_cultivo": { "titulo": "Types de Culture", "descripcion": "Catégories de cultures disponibles dans la serre", "id": "Id", "nombre": "Nom" },
-    "cultivo": { "titulo": "Cultures", "descripcion": "Cultures enregistrées dans la serre", "id": "Id", "nombre": "Nom", "tipo_cultivo_id": "Type de Culture" },
+    "tipo_cultivo": { "titulo": "Types de Culture", "descripcion": "Categories de cultures disponibles dans la serre", "id": "Id", "nombre": "Nom" },
+    "cultivo": { "titulo": "Cultures", "descripcion": "Cultures enregistrees dans la serre", "id": "Id", "nombre": "Nom", "tipo_cultivo_id": "Type de Culture" },
     "producto": { "titulo": "Produits", "descripcion": "Produits disponibles dans l'inventaire", "id": "Id", "nombre": "Nom", "precio": "Prix", "stock": "Stock" },
-    "proveedor": { "titulo": "Fournisseurs", "descripcion": "Fournisseurs qui approvisionnent la serre", "id": "Id", "nombre": "Nom", "telefono": "Téléphone", "email": "E-mail" },
-    "persona": { "titulo": "Personnes", "descripcion": "Personnes enregistrées dans le système", "id": "Id", "nombre": "Prénom", "apellido": "Nom de famille", "email": "E-mail" }
+    "proveedor": { "titulo": "Fournisseurs", "descripcion": "Fournisseurs qui approvisionnent la serre", "id": "Id", "nombre": "Nom", "telefono": "Telephone", "email": "E-mail" },
+    "persona": { "titulo": "Personnes", "descripcion": "Personnes enregistrees dans le systeme", "id": "Id", "nombre": "Prenom", "apellido": "Nom de famille", "email": "E-mail" }
   },
   "perfil": {
-    "titulo": "Mon Profil", "descripcion": "Vos données personnelles et paramètres de compte",
-    "nombre": "Nom complet", "email": "Adresse e-mail", "rol": "Rôle", "proveedor": "Type de compte", "fechaCreacion": "Membre depuis",
-    "eliminarCuenta": "Supprimer mon compte", "confirmarEliminar": "Êtes-vous sûr ? Cette action est irréversible.",
+    "titulo": "Mon Profil", "descripcion": "Vos donnees personnelles et parametres de compte",
+    "nombre": "Nom complet", "email": "Adresse e-mail", "rol": "Role", "proveedor": "Type de compte", "fechaCreacion": "Membre depuis",
+    "eliminarCuenta": "Supprimer mon compte", "adminNoEliminable": "Les comptes administrateurs ne peuvent pas etre supprimes depuis le profil afin d'eviter que le systeme reste sans administration.", "confirmarEliminar": "Etes-vous sur? Cette action est irreversible.",
     "roles": { "ADMIN": "Administrateur", "USER": "Utilisateur" }, "proveedores": { "local": "Compte local", "google": "Google" }
   },
   "admin": {
-    "usuarios": { "titulo": "Gestion des Utilisateurs", "descripcion": "Gérez les utilisateurs du système", "nombre": "Nom", "email": "E-mail", "rol": "Rôle", "estado": "Statut", "proveedor": "Compte", "fechaCreacion": "Date d'inscription", "inhabilitar": "Désactiver", "habilitar": "Activer", "activo": "Actif", "inactivo": "Inactif" },
-    "auditoria": { "titulo": "Audit du Système", "descripcion": "Journal des activités du système", "fecha": "Date et heure", "email": "Utilisateur", "nombre": "Nom", "accion": "Action", "detalle": "Détail", "exportar": "Exporter CSV", "filtrar": "Filtrer", "limpiar": "Effacer", "mes": "Mois", "anio": "Année", "todasAcciones": "Toutes les actions", "todosMeses": "Tous les mois" }
+    "usuarios": { "titulo": "Gestion des Utilisateurs", "descripcion": "Gerez les utilisateurs du systeme", "nombre": "Nom", "email": "E-mail", "rol": "Role", "estado": "Statut", "proveedor": "Compte", "fechaCreacion": "Date d'inscription", "inhabilitar": "Desactiver", "habilitar": "Activer", "activo": "Actif", "inactivo": "Inactif" },
+    "auditoria": { "titulo": "Audit du Systeme", "descripcion": "Journal des activites du systeme", "fecha": "Date et heure", "email": "Utilisateur", "nombre": "Nom", "accion": "Action", "detalle": "Detail", "exportar": "Exporter CSV", "filtrar": "Filtrer", "limpiar": "Effacer", "mes": "Mois", "anio": "Annee", "todasAcciones": "Toutes les actions", "todosMeses": "Tous les mois" }
   },
-  "tiposAccion": { "LOGIN": "Connexion", "LOGOUT": "Déconnexion", "REGISTRO": "Inscription", "ELIMINACION_CUENTA": "Suppression de compte", "INHABILITAR_USUARIO": "Désactiver utilisateur", "HABILITAR_USUARIO": "Activer utilisateur" },
-  "meses": { "1": "Janvier", "2": "Février", "3": "Mars", "4": "Avril", "5": "Mai", "6": "Juin", "7": "Juillet", "8": "Août", "9": "Septembre", "10": "Octobre", "11": "Novembre", "12": "Décembre" }
+  "tiposAccion": { "LOGIN": "Connexion", "LOGOUT": "Deconnexion", "REGISTRO": "Inscription", "ELIMINACION_CUENTA": "Suppression de compte", "INHABILITAR_USUARIO": "Desactiver utilisateur", "HABILITAR_USUARIO": "Activer utilisateur" },
+  "meses": { "1": "Janvier", "2": "Fevrier", "3": "Mars", "4": "Avril", "5": "Mai", "6": "Juin", "7": "Juillet", "8": "Aout", "9": "Septembre", "10": "Octobre", "11": "Novembre", "12": "Decembre" }
 }

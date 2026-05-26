@@ -12,7 +12,7 @@
   "perfil": {
     "titulo": "My Profile", "descripcion": "Your personal data and account settings",
     "nombre": "Full name", "email": "Email address", "rol": "Role", "proveedor": "Account type", "fechaCreacion": "Member since",
-    "eliminarCuenta": "Delete my account", "confirmarEliminar": "Are you sure? This action is irreversible and will permanently delete all your data.",
+    "eliminarCuenta": "Delete my account", "adminNoEliminable": "Administrator accounts cannot be deleted from the profile to prevent the system from being left without administration.", "confirmarEliminar": "Are you sure? This action is irreversible and will permanently delete all your data.",
     "roles": { "ADMIN": "Administrator", "USER": "User" }, "proveedores": { "local": "Local account", "google": "Google" }
   },
   "admin": {

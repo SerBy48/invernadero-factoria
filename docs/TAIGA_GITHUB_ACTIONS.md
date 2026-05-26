@@ -38,6 +38,7 @@ Este proyecto usa GitHub como repositorio y GitHub Actions como automatizador de
 | `.github/workflows/pr-check.yml` | Valida que cada PR tenga historia Taiga y criterios de aceptacion. |
 | `.github/workflows/cd.yml` | Construye y publica imagenes Docker, y notifica despliegue a Taiga. |
 | `.github/workflows/taiga-sync.yml` | Notifica actividad de issues y PRs al webhook de Taiga. |
+| `.github/workflows/auto-story-on-ci-failure.yml` | Crea automaticamente una historia/incidencia cuando falla CI. |
 
 ## Secretos requeridos en GitHub
 
@@ -50,6 +51,56 @@ En GitHub: `Settings > Secrets and variables > Actions > New repository secret`.
 | `TAIGA_WEBHOOK_URL` | URL del webhook o integracion intermedia de Taiga. |
 | `TAIGA_TOKEN` | Token usado para autenticar la notificacion. |
 | `TAIGA_PROJECT_ID` | ID del proyecto Taiga. |
+| `TAIGA_API_URL` | URL base de la API de Taiga. Valor usual: `https://api.taiga.io/api/v1`. |
+| `TAIGA_AUTH_TOKEN` | Token Bearer de Taiga para crear historias por API. |
+| `TAIGA_PROJECT_NUMERIC_ID` | ID numerico real del proyecto Taiga para crear user stories. |
+
+## Automatizacion de errores
+
+Cuando el workflow `CI - Build y pruebas` falla, el workflow `auto-story-on-ci-failure.yml` hace dos cosas:
+
+1. Crea un GitHub Issue con formato de historia de usuario.
+2. Si existen `TAIGA_AUTH_TOKEN` y `TAIGA_PROJECT_NUMERIC_ID`, crea una User Story en Taiga usando la API.
+
+Esto automatiza el flujo:
+
+```text
+Fallo en GitHub Actions -> GitHub Issue automatico -> User Story automatica en Taiga
+```
+
+Si no se configura la API de Taiga, el sistema sigue creando el GitHub Issue. Esa evidencia ya demuestra automatizacion del proceso.
+
+## Como obtener el ID numerico de Taiga
+
+Si tu URL del proyecto es:
+
+```text
+https://tree.taiga.io/project/serby-sistema-invernadero/
+```
+
+el slug es:
+
+```text
+serby-sistema-invernadero
+```
+
+Para obtener el ID numerico, llama la API de Taiga:
+
+```bash
+curl -s "https://api.taiga.io/api/v1/projects/by_slug?slug=serby-sistema-invernadero"
+```
+
+En la respuesta JSON, busca el campo:
+
+```json
+{ "id": 123456 }
+```
+
+Ese valor es el que se configura como:
+
+```text
+TAIGA_PROJECT_NUMERIC_ID
+```
 
 ## Evidencia para la rubrica
 
