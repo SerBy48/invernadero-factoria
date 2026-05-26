@@ -1,4 +1,4 @@
-esto_rompe_el_build
+import NO_EXISTE from './archivo-que-no-existe';
 
 import { useState, useEffect, useCallback } from 'react';
 import { Box, CircularProgress } from '@mui/material';
