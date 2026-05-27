@@ -23,14 +23,14 @@ public class Proveedor {
     @Column(name = "nombre", length = 150, nullable = false)
     private String nombre;
 
-    @NotBlank(message = "El telefono es obligatorio")
-    @Size(max = 20, message = "El telefono no puede superar 20 caracteres")
-    @Pattern(regexp = "^\\+[1-9]\\d{6,14}$", message = "El telefono debe tener formato internacional, por ejemplo +573001112233")
+    @NotBlank(message = "El teléfono es obligatorio")
+    @Size(max = 20, message = "El teléfono no puede superar 20 caracteres")
+    @Pattern(regexp = "^\\+[1-9]\\d{6,14}$", message = "El teléfono debe tener formato internacional, por ejemplo +573001112233")
     @Column(name = "telefono", length = 20, nullable = false)
     private String telefono;
 
     @NotBlank(message = "El email es obligatorio")
-    @Email(message = "El email debe tener un formato valido")
+    @Email(message = "El email debe tener un formato válido")
     @Size(max = 150, message = "El email no puede superar 150 caracteres")
     @Column(name = "email", length = 150, nullable = false)
     private String email;

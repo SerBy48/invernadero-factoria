@@ -29,9 +29,17 @@ const ANIO_ACTUAL = new Date().getFullYear();
 function traducirDetalle(detalle, t) {
   if (!detalle) return '';
   if (detalle === 'Google OAuth2') return t('admin.auditoria.detalles.googleOAuth');
-  if (detalle === 'Primer usuario — rol ADMIN asignado') return t('admin.auditoria.detalles.primerAdmin');
-  if (detalle === 'Registro vía Google') return t('admin.auditoria.detalles.registroGoogle');
-  if (detalle === 'Registro vía Google — rol ADMIN asignado') return t('admin.auditoria.detalles.registroGoogleAdmin');
+  if ([
+    'Primer usuario - rol ADMIN asignado',
+    'Primer usuario — rol ADMIN asignado',
+  ].includes(detalle)) return t('admin.auditoria.detalles.primerAdmin');
+  if ([
+    'Registro vía Google',
+  ].includes(detalle)) return t('admin.auditoria.detalles.registroGoogle');
+  if ([
+    'Registro vía Google - rol ADMIN asignado',
+    'Registro vía Google — rol ADMIN asignado',
+  ].includes(detalle)) return t('admin.auditoria.detalles.registroGoogleAdmin');
   if (detalle.startsWith('Usuario afectado:')) {
     return `${t('admin.auditoria.detalles.usuarioAfectado')}: ${detalle.replace('Usuario afectado:', '').trim()}`;
   }

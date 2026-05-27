@@ -163,7 +163,7 @@ public class AdminController {
             default -> switch (key) {
                 case "fecha" -> "Fecha y hora";
                 case "nombre" -> "Nombre";
-                case "accion" -> "Accion";
+                case "accion" -> "Acción";
                 case "detalle" -> "Detalle";
                 default -> key;
             };
@@ -206,10 +206,10 @@ public class AdminController {
                 case HABILITAR_USUARIO -> "Benutzer aktivieren";
             };
             default -> switch (accion) {
-                case LOGIN -> "Inicio de sesion";
-                case LOGOUT -> "Cierre de sesion";
+                case LOGIN -> "Inicio de sesión";
+                case LOGOUT -> "Cierre de sesión";
                 case REGISTRO -> "Registro";
-                case ELIMINACION_CUENTA -> "Eliminacion de cuenta";
+                case ELIMINACION_CUENTA -> "Eliminación de cuenta";
                 case INHABILITAR_USUARIO -> "Inhabilitar usuario";
                 case HABILITAR_USUARIO -> "Habilitar usuario";
             };
@@ -234,7 +234,7 @@ public class AdminController {
                 case "fr" -> "Inscription via Google";
                 case "pt" -> "Registro via Google";
                 case "de" -> "Registrierung uber Google";
-                default -> "Registro via Google";
+                default -> "Registro vía Google";
             };
         }
         if ("Registro vía Google — rol ADMIN asignado".equals(detalle)) {
@@ -243,7 +243,7 @@ public class AdminController {
                 case "fr" -> "Inscription via Google - role ADMIN attribue";
                 case "pt" -> "Registro via Google - funcao ADMIN atribuida";
                 case "de" -> "Registrierung uber Google - ADMIN-Rolle zugewiesen";
-                default -> "Registro via Google - rol ADMIN asignado";
+                default -> "Registro vía Google - rol ADMIN asignado";
             };
         }
         if (detalle.startsWith("Usuario afectado:")) {

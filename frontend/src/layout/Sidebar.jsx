@@ -114,7 +114,7 @@ export default function Sidebar({ entidades, vistaActual, setVista, mobileOpen, 
       <List sx={{ flexGrow: 1, px: 1.5, pt: 1.5, pb: 1, overflowY: 'auto' }}>
         {usuarioRol !== 'ADMIN' && (
           <>
-            {sectionLabel('Gestion')}
+            {sectionLabel('Gestión')}
             {entidades.map(ent => navItem(ent, ENTITY_ICONS[ent], t(`entidades.${ent}.titulo`)))}
           </>
         )}

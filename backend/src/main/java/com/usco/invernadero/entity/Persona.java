@@ -33,7 +33,7 @@ public class Persona {
     private String apellido;
 
     @NotBlank(message = "El email es obligatorio")
-    @Email(message = "El email debe tener un formato valido")
+    @Email(message = "El email debe tener un formato válido")
     @Size(max = 150, message = "El email no puede superar 150 caracteres")
     @Column(name = "email", length = 150, nullable = false)
     private String email;

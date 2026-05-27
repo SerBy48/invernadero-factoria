@@ -19,7 +19,7 @@ const FEATURE_KEYS = [
 ];
 
 const IDIOMAS = [
-  { value: 'es', label: 'Espanol' },
+  { value: 'es', label: 'Español' },
   { value: 'en', label: 'English' },
   { value: 'fr', label: 'Francais' },
   { value: 'pt', label: 'Portugues' },
@@ -29,7 +29,7 @@ const IDIOMAS = [
 const INIT_FORM = { nombre: '', email: '', password: '', confirmar: '' };
 const INIT_ERRORES = { nombre: '', email: '', password: '', confirmar: '' };
 
-const SOLO_LETRAS = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/;
+const SOLO_LETRAS = /^[\p{L}\s]+$/u;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validarCampo(campo, valor, passwordActual, t) {

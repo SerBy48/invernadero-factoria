@@ -47,7 +47,7 @@ public class AuthController {
         if (nombre.isBlank() || email.isBlank() || password.isBlank()) {
             return ResponseEntity.badRequest().body(Map.of("error", "Todos los campos son obligatorios"));
         }
-        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]{2,100}")) {
+        if (!nombre.matches("[\\p{L}\\s]{2,100}")) {
             return ResponseEntity.badRequest().body(Map.of("error", "El nombre solo puede contener letras y espacios (mínimo 2 caracteres)"));
         }
         if (!email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
@@ -69,7 +69,7 @@ public class AuthController {
         usuarioRepository.save(u);
 
         auditLogService.registrar(email, nombre, TipoAccion.REGISTRO,
-            u.getRol().equals("ADMIN") ? "Primer usuario — rol ADMIN asignado" : null);
+            u.getRol().equals("ADMIN") ? "Primer usuario - rol ADMIN asignado" : null);
 
         return ResponseEntity.ok(Map.of("mensaje", "Usuario registrado exitosamente"));
     }

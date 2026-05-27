@@ -50,7 +50,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         if (esNuevo[0]) {
             auditLogService.registrar(email, usuario.getNombre(), TipoAccion.REGISTRO,
-                "Registro vía Google" + (usuario.getRol().equals("ADMIN") ? " — rol ADMIN asignado" : ""));
+                "Registro vía Google" + (usuario.getRol().equals("ADMIN") ? " - rol ADMIN asignado" : ""));
         } else {
             auditLogService.registrar(email, usuario.getNombre(), TipoAccion.LOGIN, "Google OAuth2");
         }
