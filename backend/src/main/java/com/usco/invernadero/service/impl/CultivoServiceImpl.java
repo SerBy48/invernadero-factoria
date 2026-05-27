@@ -8,6 +8,7 @@ import com.usco.invernadero.entity.Cultivo;
 import com.usco.invernadero.entity.Usuario;
 import com.usco.invernadero.exception.CultivoNotFoundException;
 import com.usco.invernadero.repository.CultivoRepository;
+import com.usco.invernadero.repository.TipoCultivoRepository;
 import com.usco.invernadero.service.CultivoService;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class CultivoServiceImpl implements CultivoService {
 
     private final CultivoRepository repository;
+    private final TipoCultivoRepository tipoCultivoRepository;
     private final MessageSource messageSource;
 
     @Override
@@ -33,6 +35,9 @@ public class CultivoServiceImpl implements CultivoService {
     @Override
     @Transactional
     public Cultivo save(Cultivo entity) {
+        entity.setTipoCultivo(tipoCultivoRepository
+                .findByIdAndUsuario(entity.getTipoCultivo().getId(), entity.getUsuario())
+                .orElseThrow(() -> new CultivoNotFoundException(entity.getTipoCultivo().getId(), messageSource)));
         return repository.save(entity);
     }
 
@@ -41,7 +46,9 @@ public class CultivoServiceImpl implements CultivoService {
     public Cultivo update(Long id, Cultivo entity, Usuario usuario) {
         Cultivo existing = findById(id, usuario);
         existing.setNombre(entity.getNombre());
-        existing.setTipoCultivo(entity.getTipoCultivo());
+        existing.setTipoCultivo(tipoCultivoRepository
+                .findByIdAndUsuario(entity.getTipoCultivo().getId(), usuario)
+                .orElseThrow(() -> new CultivoNotFoundException(entity.getTipoCultivo().getId(), messageSource)));
         return repository.save(existing);
     }
 

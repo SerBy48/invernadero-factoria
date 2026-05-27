@@ -1,23 +1,30 @@
 {
-  "app": { "titulo": "Greenhouse System", "cerrarSesion": "Logout", "bienvenido": "Welcome" },
+  "app": { "titulo": "Greenhouse System", "cerrarSesion": "Logout", "bienvenido": "Welcome", "modoClaro": "Light mode", "modoOscuro": "Dark mode", "idioma": "Language" },
   "acciones": { "nuevo": "New", "editar": "Edit", "eliminar": "Delete", "guardar": "Save", "cancelar": "Cancel", "buscar": "Search" },
   "mensajes": { "confirmEliminar": "Confirm delete this record?", "exito": "Operation successful", "error": "An error occurred" },
   "entidades": {
     "tipo_cultivo": { "titulo": "Crop Types", "descripcion": "Crop categories available in the greenhouse", "id": "Id", "nombre": "Name" },
     "cultivo": { "titulo": "Crops", "descripcion": "Crops registered in the greenhouse", "id": "Id", "nombre": "Name", "tipo_cultivo_id": "Crop Type" },
-    "producto": { "titulo": "Products", "descripcion": "Products available in the greenhouse inventory", "id": "Id", "nombre": "Name", "precio": "Price", "stock": "Stock" },
+    "producto": { "titulo": "Products", "descripcion": "Products available in the greenhouse inventory", "id": "Id", "nombre": "Name", "precio": "Price", "moneda": "Currency", "stock": "Stock" },
     "proveedor": { "titulo": "Suppliers", "descripcion": "Suppliers that provide products to the greenhouse", "id": "Id", "nombre": "Name", "telefono": "Phone", "email": "Email" },
     "persona": { "titulo": "People", "descripcion": "People registered in the system (employees, customers)", "id": "Id", "nombre": "Name", "apellido": "Last Name", "email": "Email" }
   },
   "perfil": {
     "titulo": "My Profile", "descripcion": "Your personal data and account settings",
     "nombre": "Full name", "email": "Email address", "rol": "Role", "proveedor": "Account type", "fechaCreacion": "Member since",
-    "eliminarCuenta": "Delete my account", "adminNoEliminable": "Administrator accounts cannot be deleted from the profile to prevent the system from being left without administration.", "confirmarEliminar": "Are you sure? This action is irreversible and will permanently delete all your data.",
+    "zonaPeligro": "Danger zone", "eliminarCuenta": "Delete my account", "adminNoEliminable": "Administrator accounts cannot be deleted from the profile to prevent the system from being left without administration.", "confirmarEliminar": "Are you sure? This action is irreversible and will permanently delete all your data.",
     "roles": { "ADMIN": "Administrator", "USER": "User" }, "proveedores": { "local": "Local account", "google": "Google" }
   },
   "admin": {
     "usuarios": { "titulo": "User Management", "descripcion": "Manage users registered in the system", "nombre": "Name", "email": "Email", "rol": "Role", "estado": "Status", "proveedor": "Account", "fechaCreacion": "Registration date", "inhabilitar": "Disable", "habilitar": "Enable", "activo": "Active", "inactivo": "Inactive" },
     "auditoria": { "titulo": "System Audit", "descripcion": "Record of system activities and actions", "fecha": "Date & Time", "email": "User", "nombre": "Name", "accion": "Action", "detalle": "Detail", "exportar": "Export CSV", "filtrar": "Filter", "limpiar": "Clear", "mes": "Month", "anio": "Year", "todasAcciones": "All actions", "todosMeses": "All months" }
+  },
+  "login": {
+    "marca": "Usco Greenhouse", "subtitulo": "An integrated management system for your greenhouse. Control crops, inventory and more from one place.",
+    "bienvenido": "Welcome back", "crearCuenta": "Create account", "loginDescripcion": "Enter your credentials to continue", "registroDescripcion": "Complete the form to register",
+    "iniciarSesion": "Sign in", "registrarse": "Register", "nombreCompleto": "Full name", "correo": "Email address", "password": "Password", "passwordRegistro": "Password (min. 8 characters, letters and numbers)", "confirmarPassword": "Confirm password", "continuarCon": "or continue with", "footer": "Greenhouse System - Software Factory",
+    "features": { "cultivos": "Crop and crop type management", "productos": "Product inventory control", "proveedores": "Supplier administration", "personas": "System people registry", "idiomas": "Multilingual support (5 languages)" },
+    "validacion": { "nombreObligatorio": "Name is required", "soloLetras": "Only letters and spaces are allowed", "minNombre": "Minimum 2 characters", "emailObligatorio": "Email is required", "emailFormato": "Invalid email format (example: user@mail.com)", "passwordObligatoria": "Password is required", "passwordMin": "Minimum 8 characters", "passwordLetra": "Must contain at least one letter", "passwordNumero": "Must contain at least one number", "confirmarObligatorio": "Confirm your password", "passwordNoCoincide": "Passwords do not match" }
   },
   "tiposAccion": { "LOGIN": "Login", "LOGOUT": "Logout", "REGISTRO": "Registration", "ELIMINACION_CUENTA": "Account deletion", "INHABILITAR_USUARIO": "Disable user", "HABILITAR_USUARIO": "Enable user" },
   "meses": { "1": "January", "2": "February", "3": "March", "4": "April", "5": "May", "6": "June", "7": "July", "8": "August", "9": "September", "10": "October", "11": "November", "12": "December" }

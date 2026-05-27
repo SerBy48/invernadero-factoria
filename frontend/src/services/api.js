@@ -1,9 +1,5 @@
 import axios from 'axios';
 
-/**
- * Instancia de Axios configurada.
- * Adjunta automáticamente Accept-Language desde localStorage.
- */
 const api = axios.create({
   baseURL: '/api',
   withCredentials: true,
@@ -18,9 +14,12 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(
   res => res,
   err => {
-    const msg = err.response?.data?.error
-             || err.response?.data?.mensaje
-             || 'Error de conexión';
+    const errores = err.response?.data?.errores;
+    const msg = errores
+      ? Object.values(errores).join('\n')
+      : err.response?.data?.error
+        || err.response?.data?.mensaje
+        || 'Error de conexion';
     return Promise.reject(new Error(msg));
   }
 );

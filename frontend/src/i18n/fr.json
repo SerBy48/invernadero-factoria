@@ -1,23 +1,30 @@
 {
-  "app": { "titulo": "Systeme de Serre", "cerrarSesion": "Deconnexion", "bienvenido": "Bienvenue" },
+  "app": { "titulo": "Systeme de Serre", "cerrarSesion": "Deconnexion", "bienvenido": "Bienvenue", "modoClaro": "Mode clair", "modoOscuro": "Mode sombre", "idioma": "Langue" },
   "acciones": { "nuevo": "Nouveau", "editar": "Modifier", "eliminar": "Supprimer", "guardar": "Enregistrer", "cancelar": "Annuler", "buscar": "Rechercher" },
   "mensajes": { "confirmEliminar": "Confirmer la suppression?", "exito": "Operation reussie", "error": "Une erreur s'est produite" },
   "entidades": {
     "tipo_cultivo": { "titulo": "Types de Culture", "descripcion": "Categories de cultures disponibles dans la serre", "id": "Id", "nombre": "Nom" },
     "cultivo": { "titulo": "Cultures", "descripcion": "Cultures enregistrees dans la serre", "id": "Id", "nombre": "Nom", "tipo_cultivo_id": "Type de Culture" },
-    "producto": { "titulo": "Produits", "descripcion": "Produits disponibles dans l'inventaire", "id": "Id", "nombre": "Nom", "precio": "Prix", "stock": "Stock" },
+    "producto": { "titulo": "Produits", "descripcion": "Produits disponibles dans l'inventaire", "id": "Id", "nombre": "Nom", "precio": "Prix", "moneda": "Devise", "stock": "Stock" },
     "proveedor": { "titulo": "Fournisseurs", "descripcion": "Fournisseurs qui approvisionnent la serre", "id": "Id", "nombre": "Nom", "telefono": "Telephone", "email": "E-mail" },
     "persona": { "titulo": "Personnes", "descripcion": "Personnes enregistrees dans le systeme", "id": "Id", "nombre": "Prenom", "apellido": "Nom de famille", "email": "E-mail" }
   },
   "perfil": {
     "titulo": "Mon Profil", "descripcion": "Vos donnees personnelles et parametres de compte",
     "nombre": "Nom complet", "email": "Adresse e-mail", "rol": "Role", "proveedor": "Type de compte", "fechaCreacion": "Membre depuis",
-    "eliminarCuenta": "Supprimer mon compte", "adminNoEliminable": "Les comptes administrateurs ne peuvent pas etre supprimes depuis le profil afin d'eviter que le systeme reste sans administration.", "confirmarEliminar": "Etes-vous sur? Cette action est irreversible.",
+    "zonaPeligro": "Zone de danger", "eliminarCuenta": "Supprimer mon compte", "adminNoEliminable": "Les comptes administrateurs ne peuvent pas etre supprimes depuis le profil afin d'eviter que le systeme reste sans administration.", "confirmarEliminar": "Etes-vous sur? Cette action est irreversible.",
     "roles": { "ADMIN": "Administrateur", "USER": "Utilisateur" }, "proveedores": { "local": "Compte local", "google": "Google" }
   },
   "admin": {
     "usuarios": { "titulo": "Gestion des Utilisateurs", "descripcion": "Gerez les utilisateurs du systeme", "nombre": "Nom", "email": "E-mail", "rol": "Role", "estado": "Statut", "proveedor": "Compte", "fechaCreacion": "Date d'inscription", "inhabilitar": "Desactiver", "habilitar": "Activer", "activo": "Actif", "inactivo": "Inactif" },
     "auditoria": { "titulo": "Audit du Systeme", "descripcion": "Journal des activites du systeme", "fecha": "Date et heure", "email": "Utilisateur", "nombre": "Nom", "accion": "Action", "detalle": "Detail", "exportar": "Exporter CSV", "filtrar": "Filtrer", "limpiar": "Effacer", "mes": "Mois", "anio": "Annee", "todasAcciones": "Toutes les actions", "todosMeses": "Tous les mois" }
+  },
+  "login": {
+    "marca": "Serre Usco", "subtitulo": "Systeme integral de gestion pour votre serre. Controlez les cultures, l'inventaire et plus encore depuis un seul endroit.",
+    "bienvenido": "Content de vous revoir", "crearCuenta": "Creer un compte", "loginDescripcion": "Entrez vos identifiants pour continuer", "registroDescripcion": "Completez le formulaire pour vous inscrire",
+    "iniciarSesion": "Se connecter", "registrarse": "S'inscrire", "nombreCompleto": "Nom complet", "correo": "Adresse e-mail", "password": "Mot de passe", "passwordRegistro": "Mot de passe (min. 8 caracteres, lettres et chiffres)", "confirmarPassword": "Confirmer le mot de passe", "continuarCon": "ou continuer avec", "footer": "Systeme de Serre - Fabrique de Logiciels",
+    "features": { "cultivos": "Gestion des cultures et types de culture", "productos": "Controle de l'inventaire des produits", "proveedores": "Administration des fournisseurs", "personas": "Registre des personnes du systeme", "idiomas": "Support multilingue (5 langues)" },
+    "validacion": { "nombreObligatorio": "Le nom est obligatoire", "soloLetras": "Seules les lettres et les espaces sont autorises", "minNombre": "Minimum 2 caracteres", "emailObligatorio": "L'e-mail est obligatoire", "emailFormato": "Format d'e-mail invalide (ex: utilisateur@mail.com)", "passwordObligatoria": "Le mot de passe est obligatoire", "passwordMin": "Minimum 8 caracteres", "passwordLetra": "Doit contenir au moins une lettre", "passwordNumero": "Doit contenir au moins un chiffre", "confirmarObligatorio": "Confirmez votre mot de passe", "passwordNoCoincide": "Les mots de passe ne correspondent pas" }
   },
   "tiposAccion": { "LOGIN": "Connexion", "LOGOUT": "Deconnexion", "REGISTRO": "Inscription", "ELIMINACION_CUENTA": "Suppression de compte", "INHABILITAR_USUARIO": "Desactiver utilisateur", "HABILITAR_USUARIO": "Activer utilisateur" },
   "meses": { "1": "Janvier", "2": "Fevrier", "3": "Mars", "4": "Avril", "5": "Mai", "6": "Juin", "7": "Juillet", "8": "Aout", "9": "Septembre", "10": "Octobre", "11": "Novembre", "12": "Decembre" }

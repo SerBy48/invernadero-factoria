@@ -1,23 +1,30 @@
 {
-  "app": { "titulo": "Gewachshaus-System", "cerrarSesion": "Abmelden", "bienvenido": "Willkommen" },
+  "app": { "titulo": "Gewachshaus-System", "cerrarSesion": "Abmelden", "bienvenido": "Willkommen", "modoClaro": "Heller Modus", "modoOscuro": "Dunkler Modus", "idioma": "Sprache" },
   "acciones": { "nuevo": "Neu", "editar": "Bearbeiten", "eliminar": "Loschen", "guardar": "Speichern", "cancelar": "Abbrechen", "buscar": "Suchen" },
   "mensajes": { "confirmEliminar": "Diesen Eintrag wirklich loschen?", "exito": "Vorgang erfolgreich", "error": "Ein Fehler ist aufgetreten" },
   "entidades": {
     "tipo_cultivo": { "titulo": "Kulturtypen", "descripcion": "Im Gewachshaus verfugbare Kulturkategorien", "id": "Id", "nombre": "Name" },
     "cultivo": { "titulo": "Kulturen", "descripcion": "Im Gewachshaus registrierte Kulturen", "id": "Id", "nombre": "Name", "tipo_cultivo_id": "Kulturtyp" },
-    "producto": { "titulo": "Produkte", "descripcion": "Im Inventar verfugbare Produkte", "id": "Id", "nombre": "Name", "precio": "Preis", "stock": "Bestand" },
+    "producto": { "titulo": "Produkte", "descripcion": "Im Inventar verfugbare Produkte", "id": "Id", "nombre": "Name", "precio": "Preis", "moneda": "Wahrung", "stock": "Bestand" },
     "proveedor": { "titulo": "Lieferanten", "descripcion": "Lieferanten, die das Gewachshaus beliefern", "id": "Id", "nombre": "Name", "telefono": "Telefon", "email": "E-Mail" },
     "persona": { "titulo": "Personen", "descripcion": "Im System registrierte Personen", "id": "Id", "nombre": "Vorname", "apellido": "Nachname", "email": "E-Mail" }
   },
   "perfil": {
     "titulo": "Mein Profil", "descripcion": "Ihre personlichen Daten und Kontoeinstellungen",
     "nombre": "Vollstandiger Name", "email": "E-Mail-Adresse", "rol": "Rolle", "proveedor": "Kontotyp", "fechaCreacion": "Mitglied seit",
-    "eliminarCuenta": "Konto loschen", "adminNoEliminable": "Administratorkonten koennen nicht im Profil geloescht werden, damit das System nicht ohne Verwaltung bleibt.", "confirmarEliminar": "Sind Sie sicher? Diese Aktion ist unwiderruflich.",
+    "zonaPeligro": "Gefahrenbereich", "eliminarCuenta": "Konto loschen", "adminNoEliminable": "Administratorkonten koennen nicht im Profil geloescht werden, damit das System nicht ohne Verwaltung bleibt.", "confirmarEliminar": "Sind Sie sicher? Diese Aktion ist unwiderruflich.",
     "roles": { "ADMIN": "Administrator", "USER": "Benutzer" }, "proveedores": { "local": "Lokales Konto", "google": "Google" }
   },
   "admin": {
     "usuarios": { "titulo": "Benutzerverwaltung", "descripcion": "Verwalten Sie die Systembenutzer", "nombre": "Name", "email": "E-Mail", "rol": "Rolle", "estado": "Status", "proveedor": "Konto", "fechaCreacion": "Registrierungsdatum", "inhabilitar": "Deaktivieren", "habilitar": "Aktivieren", "activo": "Aktiv", "inactivo": "Inaktiv" },
     "auditoria": { "titulo": "Systemaudit", "descripcion": "Protokoll der Systemaktivitaten", "fecha": "Datum und Uhrzeit", "email": "Benutzer", "nombre": "Name", "accion": "Aktion", "detalle": "Detail", "exportar": "CSV exportieren", "filtrar": "Filtern", "limpiar": "Zurucksetzen", "mes": "Monat", "anio": "Jahr", "todasAcciones": "Alle Aktionen", "todosMeses": "Alle Monate" }
+  },
+  "login": {
+    "marca": "Usco Gewachshaus", "subtitulo": "Integriertes Verwaltungssystem fur Ihr Gewachshaus. Verwalten Sie Kulturen, Inventar und mehr an einem Ort.",
+    "bienvenido": "Willkommen zuruck", "crearCuenta": "Konto erstellen", "loginDescripcion": "Geben Sie Ihre Zugangsdaten ein, um fortzufahren", "registroDescripcion": "Fullen Sie das Formular aus, um sich zu registrieren",
+    "iniciarSesion": "Anmelden", "registrarse": "Registrieren", "nombreCompleto": "Vollstandiger Name", "correo": "E-Mail-Adresse", "password": "Passwort", "passwordRegistro": "Passwort (min. 8 Zeichen, Buchstaben und Zahlen)", "confirmarPassword": "Passwort bestatigen", "continuarCon": "oder weiter mit", "footer": "Gewachshaus-System - Software Factory",
+    "features": { "cultivos": "Verwaltung von Kulturen und Kulturtypen", "productos": "Produktinventarkontrolle", "proveedores": "Lieferantenverwaltung", "personas": "Personenregister des Systems", "idiomas": "Mehrsprachige Unterstutzung (5 Sprachen)" },
+    "validacion": { "nombreObligatorio": "Name ist erforderlich", "soloLetras": "Nur Buchstaben und Leerzeichen sind erlaubt", "minNombre": "Mindestens 2 Zeichen", "emailObligatorio": "E-Mail ist erforderlich", "emailFormato": "Ungultiges E-Mail-Format (z.B. benutzer@mail.com)", "passwordObligatoria": "Passwort ist erforderlich", "passwordMin": "Mindestens 8 Zeichen", "passwordLetra": "Muss mindestens einen Buchstaben enthalten", "passwordNumero": "Muss mindestens eine Zahl enthalten", "confirmarObligatorio": "Bestatigen Sie Ihr Passwort", "passwordNoCoincide": "Passworter stimmen nicht uberein" }
   },
   "tiposAccion": { "LOGIN": "Anmeldung", "LOGOUT": "Abmeldung", "REGISTRO": "Registrierung", "ELIMINACION_CUENTA": "Kontoloschung", "INHABILITAR_USUARIO": "Benutzer deaktivieren", "HABILITAR_USUARIO": "Benutzer aktivieren" },
   "meses": { "1": "Januar", "2": "Februar", "3": "Marz", "4": "April", "5": "Mai", "6": "Juni", "7": "Juli", "8": "August", "9": "September", "10": "Oktober", "11": "November", "12": "Dezember" }

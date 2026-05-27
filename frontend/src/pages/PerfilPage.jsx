@@ -116,7 +116,7 @@ export default function PerfilPage({ usuario, onCuentaEliminada }) {
           sx={{ borderRadius: 3, border: '1px solid', borderColor: 'error.light', p: 3 }}
         >
           <Typography variant="subtitle1" fontWeight={700} color="error" sx={{ mb: 0.5 }}>
-            Zona de peligro
+            {t('perfil.zonaPeligro')}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             {t('perfil.confirmarEliminar')}

@@ -10,6 +10,7 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import api from '../services/api';
 import { useI18n } from '../i18n/useI18n';
 import PageShell from '../components/PageShell';
+import { firstError, letters, trimStrings } from '../utils/crudValidation';
 
 const INIT_FORM = { nombre: '' };
 
@@ -21,6 +22,7 @@ export default function TipoCultivoPage() {
   const [formData, setFormData] = useState(INIT_FORM);
   const [mensaje,  setMensaje]  = useState(null);
   const [error,    setError]    = useState(null);
+  const [errores,  setErrores]  = useState({});
 
   useEffect(() => { cargar(); }, []);
 
@@ -32,13 +34,23 @@ export default function TipoCultivoPage() {
     setEditId(row?.id ?? null);
     setFormData(row ? { ...row } : INIT_FORM);
     setError(null);
+    setErrores({});
     setOpen(true);
   }
 
+  function validar(data = formData) {
+    const next = { nombre: letters(data.nombre, t('entidades.tipo_cultivo.nombre')) };
+    setErrores(next);
+    return next;
+  }
+
   function guardar() {
+    const clean = trimStrings(formData);
+    const validation = validar(clean);
+    if (firstError(validation)) return;
     const req = editId
-      ? api.put(`/tipo-cultivos/${editId}`, formData)
-      : api.post('/tipo-cultivos', formData);
+      ? api.put(`/tipo-cultivos/${editId}`, clean)
+      : api.post('/tipo-cultivos', clean);
     req.then(r => { setMensaje(r.data.mensaje || t('mensajes.exito')); setOpen(false); cargar(); })
        .catch(e => setError(e.message));
   }
@@ -103,7 +115,12 @@ export default function TipoCultivoPage() {
             fullWidth margin="normal" required
             label={t('entidades.tipo_cultivo.nombre')}
             value={formData.nombre || ''}
-            onChange={e => setFormData(p => ({ ...p, nombre: e.target.value }))}
+            onChange={e => {
+              setFormData(p => ({ ...p, nombre: e.target.value }));
+              setErrores(p => ({ ...p, nombre: '' }));
+            }}
+            error={Boolean(errores.nombre)}
+            helperText={errores.nombre}
           />
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2.5 }}>

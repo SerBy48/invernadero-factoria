@@ -10,6 +10,7 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import api from '../services/api';
 import { useI18n } from '../i18n/useI18n';
 import PageShell from '../components/PageShell';
+import { firstError, letters, required, trimStrings } from '../utils/crudValidation';
 
 const INIT_FORM = { nombre: '', tipoCultivo: null };
 
@@ -21,6 +22,7 @@ export default function CultivoPage() {
   const [formData,          setFormData]          = useState(INIT_FORM);
   const [mensaje,           setMensaje]           = useState(null);
   const [error,             setError]             = useState(null);
+  const [errores,           setErrores]           = useState({});
   const [tiposCultivo,      setTiposCultivo]      = useState([]);
 
   useEffect(() => {
@@ -36,13 +38,26 @@ export default function CultivoPage() {
     setEditId(row?.id ?? null);
     setFormData(row ? { ...row } : INIT_FORM);
     setError(null);
+    setErrores({});
     setOpen(true);
   }
 
+  function validar(data = formData) {
+    const next = {
+      nombre: letters(data.nombre, t('entidades.cultivo.nombre')),
+      tipoCultivo: required(data.tipoCultivo?.id, t('entidades.cultivo.tipo_cultivo_id')),
+    };
+    setErrores(next);
+    return next;
+  }
+
   function guardar() {
+    const clean = { ...formData, ...trimStrings({ nombre: formData.nombre }) };
+    const validation = validar(clean);
+    if (firstError(validation)) return;
     const req = editId
-      ? api.put(`/cultivos/${editId}`, formData)
-      : api.post('/cultivos', formData);
+      ? api.put(`/cultivos/${editId}`, clean)
+      : api.post('/cultivos', clean);
     req.then(r => { setMensaje(r.data.mensaje || t('mensajes.exito')); setOpen(false); cargar(); })
        .catch(e => setError(e.message));
   }
@@ -59,7 +74,7 @@ export default function CultivoPage() {
     { field: 'nombre', headerName: t('entidades.cultivo.nombre'), flex: 1 },
     {
       field: 'tipoCultivo', headerName: t('entidades.cultivo.tipo_cultivo_id'), flex: 1,
-      valueGetter: (params) => params.row.tipoCultivo?.nombre ?? '—',
+      renderCell: ({ row }) => row.tipoCultivo?.nombre ?? '-',
     },
     {
       field: '_actions', headerName: '', width: 110, sortable: false,
@@ -111,19 +126,33 @@ export default function CultivoPage() {
             fullWidth margin="normal" required
             label={t('entidades.cultivo.nombre')}
             value={formData.nombre || ''}
-            onChange={e => setFormData(p => ({ ...p, nombre: e.target.value }))}
+            onChange={e => {
+              setFormData(p => ({ ...p, nombre: e.target.value }));
+              setErrores(p => ({ ...p, nombre: '' }));
+            }}
+            error={Boolean(errores.nombre)}
+            helperText={errores.nombre}
           />
           <FormControl fullWidth margin="normal">
             <InputLabel>{t('entidades.cultivo.tipo_cultivo_id')}</InputLabel>
             <Select
               value={formData.tipoCultivo?.id || ''}
               label={t('entidades.cultivo.tipo_cultivo_id')}
-              onChange={e => setFormData(p => ({ ...p, tipoCultivo: { id: e.target.value } }))}
+              onChange={e => {
+                setFormData(p => ({ ...p, tipoCultivo: { id: e.target.value } }));
+                setErrores(p => ({ ...p, tipoCultivo: '' }));
+              }}
+              error={Boolean(errores.tipoCultivo)}
             >
               {tiposCultivo.map(o => (
                 <MenuItem key={o.id} value={o.id}>{o.nombre}</MenuItem>
               ))}
             </Select>
+            {errores.tipoCultivo && (
+              <Box sx={{ color: 'error.main', fontSize: '0.75rem', mt: 0.5, ml: 1.75 }}>
+                {errores.tipoCultivo}
+              </Box>
+            )}
           </FormControl>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2.5 }}>
@@ -134,3 +163,4 @@ export default function CultivoPage() {
     </PageShell>
   );
 }
+

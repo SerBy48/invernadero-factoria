@@ -24,6 +24,9 @@ public class GlobalExceptionHandler {
             errores.put(e.getField(), e.getDefaultMessage()));
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(Map.of("errores", errores));
+            .body(Map.of(
+                "error", "Hay campos invalidos",
+                "errores", errores
+            ));
     }
 }

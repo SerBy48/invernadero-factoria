@@ -48,10 +48,10 @@ export default function Navbar({ usuario, onToggleSidebar }) {
           variant="h6"
           sx={{ flexGrow: 1, fontWeight: 800, letterSpacing: '-0.03em', color: 'primary.main', userSelect: 'none' }}
         >
-          🌱 {isMobile ? '' : 'Sistema Invernadero'}
+          🌱 {isMobile ? '' : t('app.titulo')}
         </Typography>
 
-        <Tooltip title={isDark ? 'Modo claro' : 'Modo oscuro'}>
+        <Tooltip title={isDark ? t('app.modoClaro') : t('app.modoOscuro')}>
           <IconButton onClick={handleToggleMode} color="inherit" size="small">
             {isDark
               ? <LightModeRoundedIcon sx={{ color: 'secondary.main' }} />

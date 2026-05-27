@@ -17,17 +17,22 @@ public class Proveedor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 150)
-    @NotNull
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(max = 150, message = "El nombre no puede superar 150 caracteres")
+    @Pattern(regexp = "^[\\p{L} ]+$", message = "El nombre solo puede contener letras y espacios")
     @Column(name = "nombre", length = 150, nullable = false)
     private String nombre;
 
-    @Size(max = 20)
-    @Column(name = "telefono", length = 20, nullable = true)
+    @NotBlank(message = "El telefono es obligatorio")
+    @Size(max = 20, message = "El telefono no puede superar 20 caracteres")
+    @Pattern(regexp = "^\\+[1-9]\\d{6,14}$", message = "El telefono debe tener formato internacional, por ejemplo +573001112233")
+    @Column(name = "telefono", length = 20, nullable = false)
     private String telefono;
 
-    @Size(max = 150)
-    @Column(name = "email", length = 150, nullable = true)
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "El email debe tener un formato valido")
+    @Size(max = 150, message = "El email no puede superar 150 caracteres")
+    @Column(name = "email", length = 150, nullable = false)
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY)

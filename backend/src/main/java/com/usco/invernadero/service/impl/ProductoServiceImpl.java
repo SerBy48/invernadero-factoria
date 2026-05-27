@@ -43,6 +43,7 @@ public class ProductoServiceImpl implements ProductoService {
         existing.setNombre(entity.getNombre());
         existing.setPrecio(entity.getPrecio());
         existing.setStock(entity.getStock());
+        existing.setMoneda(entity.getMoneda());
         return repository.save(existing);
     }
 

@@ -1,19 +1,29 @@
 import { useState } from 'react';
 import {
-  Box, Paper, Typography, TextField, Button, Tabs, Tab,
+  Box, Typography, TextField, Button, Tabs, Tab,
   Divider, Alert, CircularProgress, InputAdornment, IconButton,
+  Select, MenuItem, FormControl, InputLabel,
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import api from '../services/api';
+import { useI18n } from '../i18n/useI18n';
 
-const FEATURES = [
-  'Gestión de cultivos y tipos de cultivo',
-  'Control de inventario de productos',
-  'Administración de proveedores',
-  'Registro de personas del sistema',
-  'Soporte multilingüe (5 idiomas)',
+const FEATURE_KEYS = [
+  'cultivos',
+  'productos',
+  'proveedores',
+  'personas',
+  'idiomas',
+];
+
+const IDIOMAS = [
+  { value: 'es', label: 'Espanol' },
+  { value: 'en', label: 'English' },
+  { value: 'fr', label: 'Francais' },
+  { value: 'pt', label: 'Portugues' },
+  { value: 'de', label: 'Deutsch' },
 ];
 
 const INIT_FORM = { nombre: '', email: '', password: '', confirmar: '' };
@@ -22,27 +32,27 @@ const INIT_ERRORES = { nombre: '', email: '', password: '', confirmar: '' };
 const SOLO_LETRAS = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function validarCampo(campo, valor, passwordActual) {
+function validarCampo(campo, valor, passwordActual, t) {
   const v = valor || '';
   switch (campo) {
     case 'nombre':
-      if (!v.trim())                    return 'El nombre es obligatorio';
-      if (!SOLO_LETRAS.test(v))         return 'Solo se permiten letras y espacios';
-      if (v.trim().length < 2)          return 'Mínimo 2 caracteres';
+      if (!v.trim()) return t('login.validacion.nombreObligatorio');
+      if (!SOLO_LETRAS.test(v)) return t('login.validacion.soloLetras');
+      if (v.trim().length < 2) return t('login.validacion.minNombre');
       return '';
     case 'email':
-      if (!v.trim())                    return 'El correo es obligatorio';
-      if (!EMAIL_REGEX.test(v))         return 'Formato de correo no válido (ej: usuario@correo.com)';
+      if (!v.trim()) return t('login.validacion.emailObligatorio');
+      if (!EMAIL_REGEX.test(v)) return t('login.validacion.emailFormato');
       return '';
     case 'password':
-      if (!v)                           return 'La contraseña es obligatoria';
-      if (v.length < 8)                 return 'Mínimo 8 caracteres';
-      if (!/[a-zA-Z]/.test(v))          return 'Debe contener al menos una letra';
-      if (!/\d/.test(v))                return 'Debe contener al menos un número';
+      if (!v) return t('login.validacion.passwordObligatoria');
+      if (v.length < 8) return t('login.validacion.passwordMin');
+      if (!/[a-zA-Z]/.test(v)) return t('login.validacion.passwordLetra');
+      if (!/\d/.test(v)) return t('login.validacion.passwordNumero');
       return '';
     case 'confirmar':
-      if (!v)                           return 'Confirma tu contraseña';
-      if (v !== passwordActual)         return 'Las contraseñas no coinciden';
+      if (!v) return t('login.validacion.confirmarObligatorio');
+      if (v !== passwordActual) return t('login.validacion.passwordNoCoincide');
       return '';
     default:
       return '';
@@ -50,24 +60,25 @@ function validarCampo(campo, valor, passwordActual) {
 }
 
 export default function LoginPage({ onLoginExitoso, errorExterno }) {
-  const [tab,          setTab]          = useState(0);
-  const [form,         setForm]         = useState(INIT_FORM);
-  const [errores,      setErrores]      = useState(INIT_ERRORES);
-  const [error,        setError]        = useState(null);
-  const [cargando,     setCargando]     = useState(false);
+  const { t, lang, setLang } = useI18n();
+  const [tab, setTab] = useState(0);
+  const [form, setForm] = useState(INIT_FORM);
+  const [errores, setErrores] = useState(INIT_ERRORES);
+  const [error, setError] = useState(null);
+  const [cargando, setCargando] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const set = (field) => (e) => {
     const valor = e.target.value;
     setForm(p => ({ ...p, [field]: valor }));
     if (errores[field]) {
-      const err = validarCampo(field, valor, field === 'confirmar' ? form.password : valor);
+      const err = validarCampo(field, valor, field === 'confirmar' ? form.password : valor, t);
       setErrores(p => ({ ...p, [field]: err }));
     }
   };
 
   const blur = (field) => () => {
-    const err = validarCampo(field, form[field], form.password);
+    const err = validarCampo(field, form[field], form.password, t);
     setErrores(p => ({ ...p, [field]: err }));
   };
 
@@ -79,12 +90,13 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
   }
 
   function handleLogin() {
-    const emailErr    = validarCampo('email', form.email, '');
-    const passwordErr = form.password ? '' : 'La contraseña es obligatoria';
+    const emailErr = validarCampo('email', form.email, '', t);
+    const passwordErr = form.password ? '' : t('login.validacion.passwordObligatoria');
     setErrores(p => ({ ...p, email: emailErr, password: passwordErr }));
     if (emailErr || passwordErr) return;
 
-    setCargando(true); setError(null);
+    setCargando(true);
+    setError(null);
     api.post('/auth/login', { email: form.email, password: form.password })
       .then(() => onLoginExitoso())
       .catch(e => { setError(e.message); setCargando(false); });
@@ -95,14 +107,15 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
     const nuevos = {};
     let hayError = false;
     campos.forEach(c => {
-      const err = validarCampo(c, form[c], form.password);
+      const err = validarCampo(c, form[c], form.password, t);
       nuevos[c] = err;
       if (err) hayError = true;
     });
     setErrores(nuevos);
     if (hayError) return;
 
-    setCargando(true); setError(null);
+    setCargando(true);
+    setError(null);
     api.post('/auth/registro', { nombre: form.nombre, email: form.email, password: form.password })
       .then(() => api.post('/auth/login', { email: form.email, password: form.password }))
       .then(() => onLoginExitoso())
@@ -114,9 +127,32 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', bgcolor: 'background.default' }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', bgcolor: 'background.default', position: 'relative' }}>
+      <FormControl
+        size="small"
+        sx={{
+          position: 'absolute',
+          top: { xs: 14, sm: 18 },
+          left: { xs: 14, sm: 18 },
+          minWidth: 142,
+          zIndex: 2,
+          bgcolor: 'background.paper',
+          borderRadius: 1,
+        }}
+      >
+        <InputLabel id="login-lang-label">{t('app.idioma')}</InputLabel>
+        <Select
+          labelId="login-lang-label"
+          value={lang}
+          label={t('app.idioma')}
+          onChange={e => setLang(e.target.value)}
+        >
+          {IDIOMAS.map(({ value, label }) => (
+            <MenuItem key={value} value={value}>{label}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
-      {/* ── Panel izquierdo: hero (solo desktop) ── */}
       <Box
         sx={{
           display: { xs: 'none', md: 'flex' },
@@ -131,27 +167,28 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
         }}
       >
         <Box sx={{ position: 'absolute', top: -100, right: -100, width: 400, height: 400, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.04)' }} />
-        <Box sx={{ position: 'absolute', bottom: -80, left: -80,  width: 320, height: 320, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.06)' }} />
+        <Box sx={{ position: 'absolute', bottom: -80, left: -80, width: 320, height: 320, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.06)' }} />
         <Box sx={{ position: 'absolute', top: '40%', right: '10%', width: 180, height: 180, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.03)' }} />
 
-        <Typography variant="h2" sx={{ color: '#fff', fontWeight: 800, letterSpacing: '-0.04em', mb: 1, position: 'relative' }}>
-          Invernadero Usco
+        <Typography variant="h2" sx={{ color: '#fff', fontWeight: 800, letterSpacing: 0, mb: 1, position: 'relative' }}>
+          {t('login.marca')}
         </Typography>
         <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.75)', mb: 5, fontWeight: 400, maxWidth: 420, lineHeight: 1.6, position: 'relative' }}>
-          Sistema integral de gestión para tu invernadero. Controla cultivos, inventario y más desde un solo lugar.
+          {t('login.subtitulo')}
         </Typography>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.8, position: 'relative' }}>
-          {FEATURES.map(f => (
-            <Box key={f} sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+          {FEATURE_KEYS.map(key => (
+            <Box key={key} sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
               <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#a5d6a7', flexShrink: 0 }} />
-              <Typography sx={{ color: 'rgba(255,255,255,0.82)', fontSize: '0.95rem' }}>{f}</Typography>
+              <Typography sx={{ color: 'rgba(255,255,255,0.82)', fontSize: '0.95rem' }}>
+                {t(`login.features.${key}`)}
+              </Typography>
             </Box>
           ))}
         </Box>
       </Box>
 
-      {/* ── Panel derecho: formulario ── */}
       <Box
         sx={{
           flex: { xs: 1, md: '0 0 460px' },
@@ -160,6 +197,7 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
           justifyContent: 'center',
           alignItems: 'center',
           p: { xs: 3, sm: 5 },
+          pt: { xs: 11, sm: 10 },
           bgcolor: 'background.paper',
           minHeight: '100vh',
         }}
@@ -168,17 +206,15 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
           variant="h5"
           sx={{ display: { md: 'none' }, fontWeight: 800, color: 'primary.main', mb: 4, alignSelf: 'flex-start' }}
         >
-          Invernadero
+          {t('login.marca')}
         </Typography>
 
         <Box sx={{ width: '100%', maxWidth: 380 }}>
           <Typography variant="h5" fontWeight={700} sx={{ mb: 0.5 }}>
-            {tab === 0 ? 'Bienvenido de nuevo' : 'Crear cuenta'}
+            {tab === 0 ? t('login.bienvenido') : t('login.crearCuenta')}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            {tab === 0
-              ? 'Ingresa tus credenciales para continuar'
-              : 'Completa el formulario para registrarte'}
+            {tab === 0 ? t('login.loginDescripcion') : t('login.registroDescripcion')}
           </Typography>
 
           <Tabs
@@ -186,8 +222,8 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
             onChange={(_, v) => cambiarTab(v)}
             sx={{ mb: 3, borderBottom: 1, borderColor: 'divider' }}
           >
-            <Tab label="Iniciar sesión" sx={{ fontWeight: 600, textTransform: 'none', flex: 1 }} />
-            <Tab label="Registrarse"    sx={{ fontWeight: 600, textTransform: 'none', flex: 1 }} />
+            <Tab label={t('login.iniciarSesion')} sx={{ fontWeight: 600, textTransform: 'none', flex: 1 }} />
+            <Tab label={t('login.registrarse')} sx={{ fontWeight: 600, textTransform: 'none', flex: 1 }} />
           </Tabs>
 
           {errorExterno && (
@@ -200,7 +236,7 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
           {tab === 1 && (
             <TextField
               fullWidth size="small" margin="dense"
-              label="Nombre completo" autoFocus
+              label={t('login.nombreCompleto')} autoFocus
               value={form.nombre}
               onChange={set('nombre')}
               onBlur={blur('nombre')}
@@ -212,7 +248,7 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
 
           <TextField
             fullWidth size="small" margin="dense"
-            label="Correo electrónico" type="email"
+            label={t('login.correo')} type="email"
             autoFocus={tab === 0}
             value={form.email}
             onChange={set('email')}
@@ -224,7 +260,7 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
 
           <TextField
             fullWidth size="small" margin="dense"
-            label={tab === 1 ? 'Contraseña (mín. 8 caracteres, letras y números)' : 'Contraseña'}
+            label={tab === 1 ? t('login.passwordRegistro') : t('login.password')}
             type={showPassword ? 'text' : 'password'}
             autoComplete={tab === 1 ? 'new-password' : 'current-password'}
             value={form.password}
@@ -239,7 +275,7 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
                   <IconButton size="small" onClick={() => setShowPassword(p => !p)} edge="end">
                     {showPassword
                       ? <VisibilityOffRoundedIcon fontSize="small" />
-                      : <VisibilityRoundedIcon   fontSize="small" />}
+                      : <VisibilityRoundedIcon fontSize="small" />}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -249,7 +285,7 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
           {tab === 1 && (
             <TextField
               fullWidth size="small" margin="dense"
-              label="Confirmar contraseña" type="password"
+              label={t('login.confirmarPassword')} type="password"
               autoComplete="new-password"
               value={form.confirmar}
               onChange={set('confirmar')}
@@ -268,12 +304,12 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
           >
             {cargando
               ? <CircularProgress size={22} color="inherit" />
-              : (tab === 0 ? 'Iniciar sesión' : 'Crear cuenta')}
+              : (tab === 0 ? t('login.iniciarSesion') : t('login.crearCuenta'))}
           </Button>
 
           <Divider sx={{ mb: 2 }}>
             <Typography variant="caption" color="text.secondary" sx={{ px: 1 }}>
-              o continuar con
+              {t('login.continuarCon')}
             </Typography>
           </Divider>
 
@@ -293,7 +329,7 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
           </Button>
 
           <Typography variant="caption" color="text.disabled" sx={{ display: 'block', textAlign: 'center', mt: 4 }}>
-            Sistema Invernadero · Factoría de Software
+            {t('login.footer')}
           </Typography>
         </Box>
       </Box>
