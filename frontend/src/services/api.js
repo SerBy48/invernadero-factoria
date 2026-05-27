@@ -5,12 +5,6 @@ const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.request.use(config => {
-  const lang = localStorage.getItem('lang') || 'es';
-  config.headers['Accept-Language'] = lang;
-  return config;
-});
-
 api.interceptors.response.use(
   res => res,
   err => {
@@ -20,7 +14,12 @@ api.interceptors.response.use(
       : err.response?.data?.error
         || err.response?.data?.mensaje
         || 'Error de conexion';
-    return Promise.reject(new Error(msg));
+    const error = new Error(msg);
+    error.response = err.response;
+    error.request = err.request;
+    error.config = err.config;
+    error.status = err.response?.status;
+    return Promise.reject(error);
   }
 );
 

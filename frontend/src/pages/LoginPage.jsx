@@ -59,6 +59,20 @@ function validarCampo(campo, valor, passwordActual, t) {
   }
 }
 
+function normalizarErrorLogin(message) {
+  if (!message) return null;
+  if (message === 'login.cuentaInhabilitada') return message;
+  if (message === 'inhabilitado') return 'login.cuentaInhabilitada';
+  if (message.toLowerCase().includes('inhabilitad')) return 'login.cuentaInhabilitada';
+  return message;
+}
+
+function traducirErrorLogin(message, t) {
+  const normalizado = normalizarErrorLogin(message);
+  if (!normalizado) return null;
+  return normalizado.startsWith('login.') ? t(normalizado) : normalizado;
+}
+
 export default function LoginPage({ onLoginExitoso, errorExterno }) {
   const { t, lang, setLang } = useI18n();
   const [tab, setTab] = useState(0);
@@ -99,7 +113,7 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
     setError(null);
     api.post('/auth/login', { email: form.email, password: form.password })
       .then(() => onLoginExitoso())
-      .catch(e => { setError(e.message); setCargando(false); });
+      .catch(e => { setError(normalizarErrorLogin(e.message)); setCargando(false); });
   }
 
   function handleRegistro() {
@@ -119,7 +133,7 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
     api.post('/auth/registro', { nombre: form.nombre, email: form.email, password: form.password })
       .then(() => api.post('/auth/login', { email: form.email, password: form.password }))
       .then(() => onLoginExitoso())
-      .catch(e => { setError(e.message); setCargando(false); });
+      .catch(e => { setError(normalizarErrorLogin(e.message)); setCargando(false); });
   }
 
   function handleKeyDown(e) {
@@ -227,10 +241,10 @@ export default function LoginPage({ onLoginExitoso, errorExterno }) {
           </Tabs>
 
           {errorExterno && (
-            <Alert severity="warning" sx={{ mb: 2 }}>{errorExterno}</Alert>
+            <Alert severity="warning" sx={{ mb: 2 }}>{traducirErrorLogin(errorExterno, t)}</Alert>
           )}
           {error && (
-            <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>{error}</Alert>
+            <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>{traducirErrorLogin(error, t)}</Alert>
           )}
 
           {tab === 1 && (

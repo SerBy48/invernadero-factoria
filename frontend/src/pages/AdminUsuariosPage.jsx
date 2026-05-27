@@ -37,7 +37,7 @@ export default function AdminUsuariosPage() {
       field: 'rol', headerName: t('admin.usuarios.rol'), width: 130,
       renderCell: ({ row }) => (
         <Chip
-          label={row.rol === 'ADMIN' ? 'Admin' : 'Usuario'}
+          label={t(`perfil.roles.${row.rol}`) || row.rol}
           size="small"
           color={row.rol === 'ADMIN' ? 'warning' : 'default'}
           variant="outlined"
@@ -117,11 +117,11 @@ export default function AdminUsuariosPage() {
       {/* Confirmación toggle */}
       <Dialog open={!!confirm} onClose={() => setConfirm(null)} maxWidth="xs" fullWidth>
         <DialogTitle fontWeight={700}>
-          {confirm?.activo ? t('admin.usuarios.inhabilitar') : t('admin.usuarios.habilitar')} usuario
+          {confirm?.activo ? t('admin.usuarios.inhabilitar') : t('admin.usuarios.habilitar')} {t('admin.usuarios.usuario')}
         </DialogTitle>
         <DialogContent>
           <Typography>
-            ¿Confirmas {confirm?.activo ? 'inhabilitar' : 'habilitar'} a <strong>{confirm?.nombre}</strong>?
+            {confirm?.activo ? t('admin.usuarios.confirmarInhabilitar') : t('admin.usuarios.confirmarHabilitar')} <strong>{confirm?.nombre}</strong>?
           </Typography>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2.5 }}>
@@ -131,7 +131,7 @@ export default function AdminUsuariosPage() {
             color={confirm?.activo ? 'error' : 'success'}
             onClick={toggleActivo}
           >
-            Confirmar
+            {t('admin.usuarios.confirmar')}
           </Button>
         </DialogActions>
       </Dialog>

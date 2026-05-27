@@ -39,7 +39,7 @@ export default function App() {
       })
       .catch(e => {
         if (e.message === 'inhabilitado') {
-          setErrorMsg('Tu cuenta ha sido inhabilitada. Contacta al administrador.');
+          setErrorMsg('login.cuentaInhabilitada');
         }
         setUsuario(null);
         setCargando(false);
@@ -49,7 +49,7 @@ export default function App() {
   useEffect(() => {
     // Detect OAuth2 failure redirect with ?error=inhabilitado
     if (window.location.search.includes('inhabilitado')) {
-      setErrorMsg('Tu cuenta ha sido inhabilitada. Contacta al administrador.');
+      setErrorMsg('login.cuentaInhabilitada');
       window.history.replaceState({}, '', '/');
     }
     verificarSesion();

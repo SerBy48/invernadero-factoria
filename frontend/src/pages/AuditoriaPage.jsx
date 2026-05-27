@@ -26,8 +26,25 @@ const ACCION_COLOR = {
 const MESES = ['1','2','3','4','5','6','7','8','9','10','11','12'];
 const ANIO_ACTUAL = new Date().getFullYear();
 
+function traducirDetalle(detalle, t) {
+  if (!detalle) return '';
+  if (detalle === 'Google OAuth2') return t('admin.auditoria.detalles.googleOAuth');
+  if (detalle === 'Primer usuario — rol ADMIN asignado') return t('admin.auditoria.detalles.primerAdmin');
+  if (detalle === 'Registro vía Google') return t('admin.auditoria.detalles.registroGoogle');
+  if (detalle === 'Registro vía Google — rol ADMIN asignado') return t('admin.auditoria.detalles.registroGoogleAdmin');
+  if (detalle.startsWith('Usuario afectado:')) {
+    return `${t('admin.auditoria.detalles.usuarioAfectado')}: ${detalle.replace('Usuario afectado:', '').trim()}`;
+  }
+  return detalle;
+}
+
+function csvCell(value) {
+  const safe = value == null ? '' : String(value);
+  return `"${safe.replace(/"/g, '""')}"`;
+}
+
 export default function AuditoriaPage() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [rows,    setRows]    = useState([]);
   const [error,   setError]   = useState(null);
   const [filtros, setFiltros] = useState({ accion: '', mes: '', anio: '' });
@@ -55,9 +72,30 @@ export default function AuditoriaPage() {
     if (filtros.mes)    params.set('mes',    filtros.mes);
     if (filtros.anio)   params.set('anio',   filtros.anio);
 
-    api.get(`/admin/auditoria/export?${params}`, { responseType: 'blob' })
+    api.get(`/admin/auditoria?${params}`)
       .then(res => {
-        const url = URL.createObjectURL(new Blob([res.data], { type: 'text/csv;charset=utf-8;' }));
+        const headers = [
+          'ID',
+          t('admin.auditoria.fecha'),
+          t('admin.auditoria.email'),
+          t('admin.auditoria.nombre'),
+          t('admin.auditoria.accion'),
+          t('admin.auditoria.detalle'),
+        ];
+        const lines = [
+          'sep=;',
+          headers.map(csvCell).join(';'),
+          ...(res.data || []).map(row => [
+            row.id,
+            row.fecha ? new Date(row.fecha).toLocaleString(lang) : '',
+            row.usuarioEmail,
+            row.usuarioNombre,
+            t(`tiposAccion.${row.accion}`) || row.accion,
+            traducirDetalle(row.detalle, t),
+          ].map(csvCell).join(';')),
+        ];
+        const blob = new Blob([`\uFEFF${lines.join('\r\n')}`], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
         a.download = 'auditoria.csv';
@@ -68,14 +106,16 @@ export default function AuditoriaPage() {
       })
       .catch(async e => {
         // Si la respuesta es un blob de error, leerlo como texto
-        let msg = 'Error al exportar el archivo';
+        let msg = e.message || 'Error al exportar el archivo';
         try {
           if (e.response?.data instanceof Blob) {
             const text = await e.response.data.text();
             const json = JSON.parse(text);
-            msg = json.error || json.mensaje || msg;
+            msg = json.error || json.mensaje || (json.autenticado === false ? 'Sesion expirada o no autenticada' : msg);
           }
         } catch (_) {}
+        if (e.status === 403) msg = 'No tienes permisos para exportar este archivo';
+        if (e.status === 401) msg = 'Sesion expirada o no autenticada';
         setError(msg);
       });
   }
@@ -98,7 +138,10 @@ export default function AuditoriaPage() {
         />
       ),
     },
-    { field: 'detalle', headerName: t('admin.auditoria.detalle'), flex: 1.5, minWidth: 150 },
+    {
+      field: 'detalle', headerName: t('admin.auditoria.detalle'), flex: 1.5, minWidth: 150,
+      renderCell: ({ row }) => traducirDetalle(row.detalle, t),
+    },
   ];
 
   return (
