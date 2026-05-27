@@ -1,8 +1,6 @@
-version: '3.9'
-
 services:
   db:
-    image: postgres:18
+    image: postgres:16
     environment:
       POSTGRES_DB: invernadero
       POSTGRES_USER: invernadero
@@ -11,21 +9,31 @@ services:
       - "5433:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U invernadero -d invernadero"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - app_net
 
   backend:
     build: ./backend
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/invernadero
       SPRING_DATASOURCE_USERNAME: invernadero
       SPRING_DATASOURCE_PASSWORD: invernadero
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-local-dev-client-id}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-local-dev-client-secret}
       APP_FRONTEND_URL: http://localhost
       CORS_ALLOWED_ORIGINS: http://localhost,http://localhost:5173
+    networks:
+      - app_net
 
   frontend:
     build: ./frontend
@@ -33,6 +41,11 @@ services:
       - "80:80"
     depends_on:
       - backend
+    networks:
+      - app_net
 
 volumes:
   pg_data:
+
+networks:
+  app_net:
